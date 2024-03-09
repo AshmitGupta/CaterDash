@@ -1,4 +1,14 @@
 document.addEventListener("DOMContentLoaded", function() {
+  setTimeout(function() {
+        var priceElements = document.querySelectorAll('.prices-all');
+
+        priceElements.forEach(function(element) {
+            console.log("Original text:", element.textContent);
+            var updatedText = element.textContent.replace(/\$\s*/g, '$');
+            element.textContent = updatedText;
+            console.log("Updated text:", element.textContent);
+        });
+    }, 750);
   var cartItems = document.querySelectorAll('[id="cart-item"]');
   cartItems.forEach(function(cartItem) {
     cartItem.style.display = 'block';
