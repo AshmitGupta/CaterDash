@@ -287,3 +287,35 @@ var observer = new MutationObserver(function(mutationsList, observer) {
 });
 var config = { childList: true, subtree: true, characterData: true };
 observer.observe(targetNode, config);
+
+  const subHeading = document.getElementById('sub-heading');
+  const subLinks = document.querySelectorAll('#sub-list .sub-links-text');
+
+  // Function to update the styles based on the matching text
+  function updateSubLinksStyle() {
+    let subHeadingText = subHeading.textContent.trim();
+    // Extract text up to the first bracket if present
+    const bracketIndex = subHeadingText.indexOf('(');
+    if (bracketIndex !== -1) {
+      subHeadingText = subHeadingText.substring(0, bracketIndex).trim();
+    }
+
+    subLinks.forEach((link) => {
+      if (link.textContent.trim() === subHeadingText) {
+        // Apply new styles for matching text
+        link.style.color = '#eb2b34';
+        link.style.fontWeight = 'bold';
+      } else {
+        // Revert to original styles if not matching
+        link.style.color = ''; // Adjust if the default is not desired
+        link.style.fontWeight = ''; // Adjust if the default is not desired
+      }
+    });
+  }
+
+  // Observe changes in the sub-heading text
+  const observer = new MutationObserver(updateSubLinksStyle);
+  observer.observe(subHeading, { childList: true, subtree: true, characterData: true });
+
+  // Initial call to apply styles as needed
+  updateSubLinksStyle();
