@@ -13,6 +13,31 @@ document.addEventListener("DOMContentLoaded", function() {
     return text.toLowerCase().replace(/\s+/g, '-');
   }
 
+  function updateSubLinksStyle() {
+  const subHeadingText = document.getElementById('sub-heading').textContent.trim();
+  const subLinks = document.querySelectorAll('#sub-list .sub-links-text');
+  let textForComparison = subHeadingText.split(' (')[0]; // Extract text before any bracket ' ('
+
+  subLinks.forEach((link) => {
+    if (link.textContent.trim() === textForComparison) {
+      link.style.color = '#eb2b34';
+      link.style.fontWeight = 'bold';
+    } else {
+      link.style.color = ''; // Reset to original color if not default
+      link.style.fontWeight = ''; // Reset to original font weight if not default
+    }
+  });
+}
+
+const subHeadingObserver = new MutationObserver(updateSubLinksStyle);
+const subHeading = document.getElementById('sub-heading');
+
+subHeadingObserver.observe(subHeading, {
+  characterData: true,
+  childList: true,
+  subtree: true
+});
+
   function togglePerPersonDivs(shouldShow) {
     const perPersonDivs = document.querySelectorAll('.div-block-66');
     perPersonDivs.forEach(function(div) {
@@ -69,6 +94,8 @@ document.addEventListener("DOMContentLoaded", function() {
         dish.style.display = 'none';
       }
     });
+
+    updateSubLinksStyle();
   }
 
   function setInitialDisplay() {
@@ -76,6 +103,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (firstSubLink) {
       const firstSubLinkText = firstSubLink.textContent.trim();
       filterDishes(firstSubLinkText);
+      updateSubLinksStyle();
     } else {
     }
   }
@@ -118,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
   setInitialDisplay();
-
+  
   var notesInput = document.getElementById('notes-1');
   var checkoutButtons = document.querySelectorAll('[id="checkout-btn-1"]');
   var checkoutButton2 = document.getElementById('checkout-btn-2');
