@@ -295,10 +295,11 @@ document.addEventListener("visibilitychange", function() {
   }
 });
 var targetNode = document.getElementById('price-sub');
-var button = document.getElementById('checkout-btn-1');
+// Select all elements that match the given ID. Since IDs should be unique but you have duplicates, this approach targets them as a workaround.
+var buttons = document.querySelectorAll('[id="checkout-btn-1"]');
 
-function updateButtonStyles() {
-  if (button.disabled) {
+function updateButtonStyles(button, disabled) {
+  if (disabled) {
     button.style.backgroundColor = 'rgba(235, 43, 52, 0.5)';
     button.style.cursor = 'not-allowed';
     button.style.pointerEvents = 'none';
@@ -308,18 +309,20 @@ function updateButtonStyles() {
     button.style.pointerEvents = '';
   }
 }
+
 var observer = new MutationObserver(function(mutationsList, observer) {
-  for(var mutation of mutationsList) {
+  for (var mutation of mutationsList) {
     if (mutation.type === 'childList' || mutation.type === 'characterData') {
+      var priceValue = parseFloat(mutation.target.textContent.replace(/\$\s*/, ''));
+      
+      // Determine the disabled state based on priceValue
+      var disabled = !isNaN(priceValue) && priceValue < 150;
 
-      var priceValue = parseFloat(targetNode.textContent.replace(/\$\s*/, ''));
-
-      if (!isNaN(priceValue) && priceValue < 150) {
-        button.disabled = true;
-      } else {
-        button.disabled = false;
-      }
-      updateButtonStyles();
+      // Apply the updated styles to each button with the given ID
+      buttons.forEach(function(button) {
+        button.disabled = disabled;
+        updateButtonStyles(button, disabled);
+      });
     }
   }
 });
