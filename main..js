@@ -326,5 +326,19 @@ var observer = new MutationObserver(function(mutationsList, observer) {
     }
   }
 });
+
+  var mainHeading = document.getElementById('main-heading');
+  var topHeading = document.getElementById('top-heading');
+  var topDescription = document.getElementById('top-description');
+
+  if (mainHeading && mainHeading.textContent.trim() === 'Handi Grill') {
+      if (topHeading) {
+          topHeading.textContent = 'Catering';
+      }
+      if (topDescription) {
+          topDescription.textContent = 'Delight in rich Indian flavors with our catering, offering traditional dishes like curries, biryanis, and naan, perfect for any event.';
+      }
+  }
+
 var config = { childList: true, subtree: true, characterData: true };
 observer.observe(targetNode, config);
