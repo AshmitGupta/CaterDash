@@ -361,5 +361,34 @@ var observer = new MutationObserver(function(mutationsList, observer) {
     }
   }
 
+  if (mainHeading && mainHeading.textContent.trim() === 'Saucin Staples') {
+      if (topHeading) {
+          topHeading.textContent = 'Catering';
+      }
+      if (topDescription) {
+          topDescription.textContent = 'Experience the perfect blend of traditional Indian flavors and contemporary culinary innovation with our catering.';
+      }
+      var parentElement = mainHeading.parentNode;
+      if (parentElement) {
+          parentElement.insertBefore(topHeading, mainHeading);
+      }
+  }
+
+  if (mainHeading && mainHeading.textContent.trim() === 'Saucin Staples') {
+    if (topHeading) {
+        topHeading.style.display = 'none';
+    }
+    if (topHeading2) {
+        topHeading2.style.display = 'block';
+    }
+  } else {
+    if (topHeading) {
+        topHeading.style.display = 'block';
+    }
+    if (topHeading2) {
+        topHeading2.style.display = 'none';
+    }
+  }
+
 var config = { childList: true, subtree: true, characterData: true };
 observer.observe(targetNode, config);
