@@ -343,6 +343,22 @@ var observer = new MutationObserver(function(mutationsList, observer) {
           parentElement.insertBefore(topHeading, mainHeading);
       }
   }
+  
+  if (mainHeading && mainHeading.textContent.trim() === 'Handi Grill') {
+    if (topHeading) {
+        topHeading.style.display = 'none';
+    }
+    if (topHeading2) {
+        topHeading2.style.display = 'block';
+    }
+  } else {
+    if (topHeading) {
+        topHeading.style.display = 'block';
+    }
+    if (topHeading2) {
+        topHeading2.style.display = 'none';
+    }
+  }
 
 var config = { childList: true, subtree: true, characterData: true };
 observer.observe(targetNode, config);
