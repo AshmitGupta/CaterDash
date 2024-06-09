@@ -338,6 +338,10 @@ var observer = new MutationObserver(function(mutationsList, observer) {
       if (topDescription) {
           topDescription.textContent = 'Delight in rich Indian flavors with our catering, offering traditional dishes like curries, biryanis, and naan, perfect for any event.';
       }
+      var parentElement = mainHeading.parentNode;
+      if (parentElement) {
+          parentElement.insertBefore(topHeading, mainHeading);
+      }
   }
 
 var config = { childList: true, subtree: true, characterData: true };
