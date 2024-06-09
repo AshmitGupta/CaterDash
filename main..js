@@ -330,6 +330,7 @@ var observer = new MutationObserver(function(mutationsList, observer) {
   var mainHeading = document.getElementById('main-heading');
   var topHeading = document.getElementById('top-heading');
   var topDescription = document.getElementById('top-description');
+  var topHeading2 = document.getElementById('top-heading-2');
 
   if (mainHeading && mainHeading.textContent.trim() === 'Handi Grill') {
       if (topHeading) {
