@@ -357,43 +357,28 @@ function toggleDisplay(condition) {
 }
 
 function reorderLinks() {
-    var mainList = document.querySelector('#sub-list');
-    var subLinks = mainList.querySelectorAll('.w-dyn-item');
-
-    console.log('Found sub-list element:', mainList);
-    console.log('Found sub-link elements:', subLinks);
-
-    // Define the desired order of the items
-    var order = [
-        'Small Poke Bowls',
-        'Medium Poke Bowls',
-        'Large Poke Bowls',
-        'Plates, Cutlery & Serving Spoons'
-    ];
-
-    // Ensure subLinks has enough elements to match the order
-    if (subLinks.length < order.length) {
-        console.error('Not enough sub-link elements to match the order');
-        return;
-    }
-
-    // Update the text of the subLinks based on the defined order
-    order.forEach(function(text, index) {
-        if (index < subLinks.length) {
-            var subLinkText = subLinks[index].querySelector('.sub-links-text');
-            console.log('Index:', index, 'Desired text:', text, 'Found element:', subLinkText);
-            if (subLinkText) {
-                console.log('Updating text for element at index', index);
-                subLinkText.textContent = text;
-            } else {
-                console.log('No sub-links-text element found at index', index);
-            }
-        } else {
-            console.log('Index out of bounds for subLinks NodeList:', index);
-        }
-    });
-
-    console.log('New sub-list innerHTML:', mainList.innerHTML);
+  let subList = document.getElementById('sub-list');
+  
+  if (subList) {
+      console.log('Found the element with id "sub-list".');
+      let subLinkTextElements = subList.getElementsByClassName('sub-link-text');
+      console.log(`Found ${subLinkTextElements.length} elements with the class "sub-link-text".`);
+      let newTexts = [
+          'Large Poke Bowls',
+          'Medium Poke Bowls',
+          'Plates, Cutlery & Serving Spoons',
+          'Small Poke Bowls'
+      ];
+  
+      for (let i = 0; i < subLinkTextElements.length; i++) {
+          console.log(`Updating element ${i + 1} with text: "${newTexts[i]}"`);
+          subLinkTextElements[i].textContent = newTexts[i];
+      }
+  
+      console.log('All elements have been updated.');
+  } else {
+      console.log('Element with id "sub-list" not found.');
+  }
 }
 
 if (mainHeading) {
