@@ -362,7 +362,7 @@ function reorderLinks() {
         console.log('Found sub-list element');
         console.log('sub-list innerHTML:', subList.innerHTML);
 
-        var subLinkDivs = subList.querySelectorAll('.link-div');
+        var subLinkDivs = subList.querySelectorAll('.collection-item');
         console.log('Found sub-link-div elements:', subLinkDivs);
 
         var order = [
@@ -376,8 +376,7 @@ function reorderLinks() {
 
         order.forEach(function(item) {
             subLinkDivs.forEach(function(subLinkDiv) {
-                var subLink = subLinkDiv.querySelector('#sub-link');
-                var subLinkText = subLink ? subLink.querySelector('.sub-links-text') : null;
+                var subLinkText = subLinkDiv.querySelector('.sub-links-text');
                 if (subLinkText) {
                     console.log('Found sub-link-text:', subLinkText.textContent.trim());
                 }
