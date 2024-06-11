@@ -356,31 +356,6 @@ function toggleDisplay(condition) {
     }
 }
 
-function reorderLinks() {
-  let subList = document.getElementById('sub-list');
-  
-  if (subList) {
-      console.log('Found the element with id "sub-list".');
-      let subLinkTextElements = subList.getElementsByClassName('sub-links-text');
-      console.log(`Found ${subLinkTextElements.length} elements with the class "sub-link-text".`);
-      let newTexts = [
-          'Small Poke Bowls',
-          'Medium Poke Bowls',
-          'Large Poke Bowls',
-          'Plates, Cutlery & Serving Spoons'
-      ];
-  
-      for (let i = 0; i < subLinkTextElements.length; i++) {
-          console.log(`Updating element ${i + 1} with text: "${newTexts[i]}"`);
-          subLinkTextElements[i].textContent = newTexts[i];
-      }
-  
-      console.log('All elements have been updated.');
-  } else {
-      console.log('Element with id "sub-list" not found.');
-  }
-}
-
 if (mainHeading) {
     var mainHeadingText = mainHeading.textContent.trim();
     if (mainHeadingText === 'Handi Grill') {
@@ -392,7 +367,6 @@ if (mainHeading) {
     } else if (mainHeadingText === 'Pokey Okey') {
       updateContent('Pokey Okey', 'Catering', 'Experience authentic Hawaiian poke bowls with fresh, vibrant flavors through our catering services, perfect for any event.');
       toggleDisplay(true);
-      reorderLinks();
     } else {
         toggleDisplay(false);
     }
