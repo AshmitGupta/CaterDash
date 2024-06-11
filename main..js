@@ -356,6 +356,46 @@ function toggleDisplay(condition) {
     }
 }
 
+function reorderLinks() {
+    var mainList = document.querySelector('#sub-list');
+    var subLinks = mainList.querySelectorAll('.w-dyn-item');
+
+    console.log('Found sub-list element:', mainList);
+    console.log('Found sub-link elements:', subLinks);
+
+    // Define the desired order of the items
+    var order = [
+        'Small Poke Bowls',
+        'Medium Poke Bowls',
+        'Large Poke Bowls',
+        'Plates, Cutlery & Serving Spoons'
+    ];
+
+    // Ensure subLinks has enough elements to match the order
+    if (subLinks.length < order.length) {
+        console.error('Not enough sub-link elements to match the order');
+        return;
+    }
+
+    // Update the text of the subLinks based on the defined order
+    order.forEach(function(text, index) {
+        if (index < subLinks.length) {
+            var subLinkText = subLinks[index].querySelector('.sub-links-text');
+            console.log('Index:', index, 'Desired text:', text, 'Found element:', subLinkText);
+            if (subLinkText) {
+                console.log('Updating text for element at index', index);
+                subLinkText.textContent = text;
+            } else {
+                console.log('No sub-links-text element found at index', index);
+            }
+        } else {
+            console.log('Index out of bounds for subLinks NodeList:', index);
+        }
+    });
+
+    console.log('New sub-list innerHTML:', mainList.innerHTML);
+}
+
 if (mainHeading) {
     var mainHeadingText = mainHeading.textContent.trim();
     if (mainHeadingText === 'Handi Grill') {
@@ -367,6 +407,7 @@ if (mainHeading) {
     } else if (mainHeadingText === 'Pokey Okey') {
       updateContent('Pokey Okey', 'Catering', 'Experience authentic Hawaiian poke bowls with fresh, vibrant flavors through our catering services, perfect for any event.');
       toggleDisplay(true);
+      reorderLinks();
     } else {
         toggleDisplay(false);
     }
