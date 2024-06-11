@@ -361,7 +361,7 @@ function reorderLinks() {
   
   if (subList) {
       console.log('Found the element with id "sub-list".');
-      let subLinkTextElements = subList.getElementsByClassName('sub-link-text');
+      let subLinkTextElements = subList.getElementsByClassName('sub-links-text');
       console.log(`Found ${subLinkTextElements.length} elements with the class "sub-link-text".`);
       let newTexts = [
           'Large Poke Bowls',
