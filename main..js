@@ -327,68 +327,51 @@ var observer = new MutationObserver(function(mutationsList, observer) {
   }
 });
 
-  var mainHeading = document.getElementById('main-heading');
-  var topHeading = document.getElementById('top-heading');
-  var topDescription = document.getElementById('top-description');
-  var topHeading2 = document.getElementById('top-heading-2');
+var mainHeading = document.getElementById('main-heading');
+var topHeading = document.getElementById('top-heading');
+var topDescription = document.getElementById('top-description');
+var topHeading2 = document.getElementById('top-heading-2');
 
-  if (mainHeading && mainHeading.textContent.trim() === 'Handi Grill') {
-      if (topHeading) {
-          topHeading.textContent = 'Catering';
-      }
-      if (topDescription) {
-          topDescription.textContent = 'Delight in rich Indian flavors with our catering, offering traditional dishes like curries, biryanis, and naan, perfect for any event.';
-      }
-      var parentElement = mainHeading.parentNode;
-      if (parentElement) {
-          parentElement.insertBefore(topHeading, mainHeading);
-      }
-  }
-  
-  if (mainHeading && mainHeading.textContent.trim() === 'Handi Grill') {
+function updateContent(mainHeadingText, headingText, descriptionText) {
     if (topHeading) {
-        topHeading.style.display = 'none';
+        topHeading.textContent = headingText;
     }
-    if (topHeading2) {
-        topHeading2.style.display = 'block';
+    if (topDescription) {
+        topDescription.textContent = descriptionText;
     }
-  } else {
-    if (topHeading) {
-        topHeading.style.display = 'block';
+    if (mainHeading) {
+        var parentElement = mainHeading.parentNode;
+        if (parentElement) {
+            parentElement.insertBefore(topHeading, mainHeading);
+        }
     }
-    if (topHeading2) {
-        topHeading2.style.display = 'none';
-    }
-  }
+}
 
-  if (mainHeading && mainHeading.textContent.trim() === 'Saucin Staples') {
-      if (topHeading) {
-          topHeading.textContent = 'Catering';
-      }
-      if (topDescription) {
-          topDescription.textContent = 'Experience the perfect blend of traditional Indian flavors and contemporary culinary innovation with our catering.';
-      }
-      var parentElement = mainHeading.parentNode;
-      if (parentElement) {
-          parentElement.insertBefore(topHeading, mainHeading);
-      }
-  }
+function toggleDisplay(condition) {
+    if (topHeading) {
+        topHeading.style.display = condition ? 'none' : 'block';
+    }
+    if (topHeading2) {
+        topHeading2.style.display = condition ? 'block' : 'none';
+    }
+}
 
-  if (mainHeading && mainHeading.textContent.trim() === 'Saucin Staples') {
-    if (topHeading) {
-        topHeading.style.display = 'none';
+if (mainHeading) {
+    var mainHeadingText = mainHeading.textContent.trim();
+    if (mainHeadingText === 'Handi Grill') {
+        updateContent('Handi Grill', 'Catering', 'Delight in rich Indian flavors with our catering, offering traditional dishes like curries, biryanis, and naan, perfect for any event.');
+        toggleDisplay(true);
+    } else if (mainHeadingText === 'Saucin Staples') {
+        updateContent('Saucin Staples', 'Catering', 'Experience the perfect blend of traditional Indian flavors and contemporary culinary innovation with our catering.');
+        toggleDisplay(true);
+    } else if (mainHeadingText === 'Pokey Okey') {
+      updateContent('Pokey Okey', 'Catering', 'Experience authentic Hawaiian poke bowls with fresh, vibrant flavors through our catering services, perfect for any event.');
+      toggleDisplay(true);
+    } else {
+        toggleDisplay(false);
     }
-    if (topHeading2) {
-        topHeading2.style.display = 'block';
-    }
-  } else {
-    if (topHeading) {
-        topHeading.style.display = 'block';
-    }
-    if (topHeading2) {
-        topHeading2.style.display = 'none';
-    }
-  }
+}
+
 
 var config = { childList: true, subtree: true, characterData: true };
 observer.observe(targetNode, config);
