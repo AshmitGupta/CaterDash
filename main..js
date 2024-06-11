@@ -364,10 +364,10 @@ function reorderLinks() {
       let subLinkTextElements = subList.getElementsByClassName('sub-links-text');
       console.log(`Found ${subLinkTextElements.length} elements with the class "sub-link-text".`);
       let newTexts = [
-          'Large Poke Bowls',
+          'Small Poke Bowls',
           'Medium Poke Bowls',
-          'Plates, Cutlery & Serving Spoons',
-          'Small Poke Bowls'
+          'Large Poke Bowls',
+          'Plates, Cutlery & Serving Spoons'
       ];
   
       for (let i = 0; i < subLinkTextElements.length; i++) {
