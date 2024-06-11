@@ -358,7 +358,7 @@ function toggleDisplay(condition) {
 
 function reorderLinks() {
     var mainList = document.querySelector('#sub-list');
-    var subLinks = mainList.querySelectorAll('.w-dyn-item');
+    var subLinks = Array.from(mainList.querySelectorAll('.w-dyn-item'));
 
     console.log('Found sub-list element:', mainList);
     console.log('Found sub-link elements:', subLinks);
@@ -371,20 +371,26 @@ function reorderLinks() {
         'Plates, Cutlery & Serving Spoons'
     ];
 
-    order.forEach(function(text, index) {
-        if (index < subLinks.length) {
-            var subLinkText = subLinks[index].querySelector('.sub-links-text');
-            console.log('Index:', index, 'Desired text:', text, 'Found element:', subLinkText);
-            if (subLinkText) {
-                console.log('Updating text for element at index', index);
-                subLinkText.textContent = text;
-            } else {
-                console.log('No sub-links-text element found at index', index);
-            }
-        } else {
-            console.log('Index out of bounds for subLinks NodeList:', index);
+    // Create a map to keep track of elements by their text content
+    var elementMap = {};
+    subLinks.forEach(function(subLink) {
+        var subLinkText = subLink.querySelector('.sub-links-text').textContent.trim();
+        elementMap[subLinkText] = subLink;
+    });
+
+    console.log('Element map:', elementMap);
+
+    // Clear the main list and re-append the elements in the desired order
+    mainList.innerHTML = '';
+    order.forEach(function(text) {
+        var element = elementMap[text];
+        if (element) {
+            mainList.appendChild(element);
+            console.log('Appending element with text:', text);
         }
     });
+
+    console.log('New sub-list innerHTML:', mainList.innerHTML);
 }
 
 if (mainHeading) {
