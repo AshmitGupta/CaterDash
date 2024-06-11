@@ -357,45 +357,28 @@ function toggleDisplay(condition) {
 }
 
 function reorderLinks() {
-    var subList = document.getElementById('sub-list');
-    if (subList) {
-        console.log('Found sub-list element');
-        console.log('sub-list innerHTML:', subList.innerHTML);
+    var mainList = document.querySelector('#sub-list');
+    var subLinks = Array.from(mainList.querySelectorAll('.collection-item'));
 
-        var subLinkDivs = Array.from(subList.getElementsByClassName('collection-item'));
-        console.log('Found sub-link-div elements:', subLinkDivs);
+    // Define the desired order of the items
+    var order = [
+        'Small Poke Bowls',
+        'Medium Poke Bowls',
+        'Large Poke Bowls',
+        'Plates, Cutlery & Serving Spoons'
+    ];
 
-        var order = [
-            'Small Poke Bowls',
-            'Medium Poke Bowls',
-            'Large Poke Bowls',
-            'Plates, Cutlery & Serving Spoons'
-        ];
+    // Sort the subLinks based on the defined order
+    subLinks.sort(function(a, b) {
+        var textA = a.querySelector('.sub-links-text').textContent.trim();
+        var textB = b.querySelector('.sub-links-text').textContent.trim();
+        return order.indexOf(textA) - order.indexOf(textB);
+    });
 
-        var orderedElements = [];
-
-        order.forEach(function(item) {
-            subLinkDivs.forEach(function(subLinkDiv) {
-                var subLinkText = subLinkDiv.querySelector('.sub-links-text');
-                if (subLinkText) {
-                    console.log('Found sub-link-text:', subLinkText.textContent.trim());
-                }
-                if (subLinkText && subLinkText.textContent.trim() === item) {
-                    console.log('Matched item:', item);
-                    orderedElements.push(subLinkDiv);
-                }
-            });
-        });
-
-        // Clear the subList and append elements in the correct order
-        console.log('Ordered elements:', orderedElements);
-        subList.innerHTML = '';
-        orderedElements.forEach(function(element) {
-            subList.appendChild(element);
-        });
-    } else {
-        console.log('No sub-list element found');
-    }
+    // Append the sorted subLinks back to the main list
+    subLinks.forEach(function(dish) {
+        mainList.appendChild(dish);
+    });
 }
 
 if (mainHeading) {
