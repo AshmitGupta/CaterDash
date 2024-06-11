@@ -360,8 +360,11 @@ function reorderLinks() {
     var subList = document.getElementById('sub-list');
     if (subList) {
         console.log('Found sub-list element');
-        var subLinkDivs = subList.getElementsByClassName('link-div');
+        console.log('sub-list innerHTML:', subList.innerHTML);
+
+        var subLinkDivs = subList.querySelectorAll('.link-div');
         console.log('Found sub-link-div elements:', subLinkDivs);
+
         var order = [
             'Small Poke Bowls',
             'Medium Poke Bowls',
@@ -372,9 +375,9 @@ function reorderLinks() {
         var orderedElements = [];
 
         order.forEach(function(item) {
-            Array.prototype.forEach.call(subLinkDivs, function(subLinkDiv) {
-                var subLink = subLinkDiv.querySelector('.sub-link');
-                var subLinkText = subLink.querySelector('.sub-links-text');
+            subLinkDivs.forEach(function(subLinkDiv) {
+                var subLink = subLinkDiv.querySelector('#sub-link');
+                var subLinkText = subLink ? subLink.querySelector('.sub-links-text') : null;
                 if (subLinkText) {
                     console.log('Found sub-link-text:', subLinkText.textContent.trim());
                 }
