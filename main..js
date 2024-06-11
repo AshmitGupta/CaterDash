@@ -359,7 +359,7 @@ function toggleDisplay(condition) {
 function reorderLinks() {
     var subList = document.getElementById('sub-list');
     if (subList) {
-        var subLinks = subList.querySelectorAll('#sub-link');
+        var subLinks = subList.querySelectorAll('#sub-link-div');
         var order = [
             'Small Poke Bowls',
             'Medium Poke Bowls',
