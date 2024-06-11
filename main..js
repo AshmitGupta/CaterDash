@@ -359,7 +359,7 @@ function toggleDisplay(condition) {
 function reorderLinks() {
     var subList = document.getElementById('sub-list');
     if (subList) {
-        var subLinks = subList.querySelectorAll('#sub-link-div');
+        var subLinkDivs = subList.querySelectorAll('#sub-link-div');
         var order = [
             'Small Poke Bowls',
             'Medium Poke Bowls',
@@ -370,14 +370,17 @@ function reorderLinks() {
         var orderedElements = [];
 
         order.forEach(function(item) {
-            subLinks.forEach(function(subLink) {
+            subLinkDivs.forEach(function(subLinkDiv) {
+                var subLink = subLinkDiv.querySelector('#sub-link');
                 var subLinkText = subLink.querySelector('.sub-links-text');
                 if (subLinkText && subLinkText.textContent.trim() === item) {
-                    orderedElements.push(subLink);
+                    orderedElements.push(subLinkDiv);
                 }
             });
         });
 
+        // Clear the subList and append elements in the correct order
+        subList.innerHTML = '';
         orderedElements.forEach(function(element) {
             subList.appendChild(element);
         });
