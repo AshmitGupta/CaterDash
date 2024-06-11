@@ -358,7 +358,7 @@ function toggleDisplay(condition) {
 
 function reorderLinks() {
     var mainList = document.querySelector('#sub-list');
-    var subLinks = Array.from(mainList.querySelectorAll('.w-dyn-item'));
+    var subLinks = mainList.querySelectorAll('.collection-item');
 
     // Define the desired order of the items
     var order = [
@@ -368,16 +368,11 @@ function reorderLinks() {
         'Plates, Cutlery & Serving Spoons'
     ];
 
-    // Sort the subLinks based on the defined order
-    subLinks.sort(function(a, b) {
-        var textA = a.querySelector('.sub-links-text').textContent.trim();
-        var textB = b.querySelector('.sub-links-text').textContent.trim();
-        return order.indexOf(textA) - order.indexOf(textB);
-    });
-
-    // Append the sorted subLinks back to the main list
-    subLinks.forEach(function(dish) {
-        mainList.appendChild(dish);
+    order.forEach(function(text, index) {
+        var subLinkText = subLinks[index].querySelector('.sub-links-text');
+        if (subLinkText) {
+            subLinkText.textContent = text;
+        }
     });
 }
 
