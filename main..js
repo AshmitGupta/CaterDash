@@ -362,7 +362,7 @@ function reorderLinks() {
         console.log('Found sub-list element');
         console.log('sub-list innerHTML:', subList.innerHTML);
 
-        var subLinkDivs = subList.querySelectorAll('.collection-item');
+        var subLinkDivs = Array.from(subList.getElementsByClassName('collection-item'));
         console.log('Found sub-link-div elements:', subLinkDivs);
 
         var order = [
