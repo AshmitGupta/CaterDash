@@ -358,7 +358,7 @@ function toggleDisplay(condition) {
 
 function reorderLinks() {
     var mainList = document.querySelector('#sub-list');
-    var subLinks = Array.from(mainList.querySelectorAll('.collection-item'));
+    var subLinks = Array.from(mainList.querySelectorAll('.w-dyn-item'));
 
     // Define the desired order of the items
     var order = [
