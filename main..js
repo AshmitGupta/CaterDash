@@ -359,7 +359,9 @@ function toggleDisplay(condition) {
 function reorderLinks() {
     var subList = document.getElementById('sub-list');
     if (subList) {
+        console.log('Found sub-list element');
         var subLinkDivs = subList.querySelectorAll('#sub-link-div');
+        console.log('Found sub-link-div elements:', subLinkDivs);
         var order = [
             'Small Poke Bowls',
             'Medium Poke Bowls',
@@ -373,17 +375,24 @@ function reorderLinks() {
             subLinkDivs.forEach(function(subLinkDiv) {
                 var subLink = subLinkDiv.querySelector('#sub-link');
                 var subLinkText = subLink.querySelector('.sub-links-text');
+                if (subLinkText) {
+                    console.log('Found sub-link-text:', subLinkText.textContent.trim());
+                }
                 if (subLinkText && subLinkText.textContent.trim() === item) {
+                    console.log('Matched item:', item);
                     orderedElements.push(subLinkDiv);
                 }
             });
         });
 
         // Clear the subList and append elements in the correct order
+        console.log('Ordered elements:', orderedElements);
         subList.innerHTML = '';
         orderedElements.forEach(function(element) {
             subList.appendChild(element);
         });
+    } else {
+        console.log('No sub-list element found');
     }
 }
 
