@@ -358,7 +358,7 @@ function toggleDisplay(condition) {
 
 function reorderLinks() {
     var mainList = document.querySelector('#sub-list');
-    var subLinks = mainList.querySelectorAll('.collection-item');
+    var subLinks = mainList.querySelectorAll('.w-dyn-item');
 
     // Define the desired order of the items
     var order = [
@@ -370,7 +370,9 @@ function reorderLinks() {
 
     order.forEach(function(text, index) {
         var subLinkText = subLinks[index].querySelector('.sub-links-text');
+        console.log("found sublink text");
         if (subLinkText) {
+            console.log("Here");
             subLinkText.textContent = text;
         }
     });
