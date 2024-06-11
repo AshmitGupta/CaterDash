@@ -360,7 +360,7 @@ function reorderLinks() {
     var subList = document.getElementById('sub-list');
     if (subList) {
         console.log('Found sub-list element');
-        var subLinkDivs = subList.querySelectorAll('#sub-link-div');
+        var subLinkDivs = subList.querySelectorAll('.link-div');
         console.log('Found sub-link-div elements:', subLinkDivs);
         var order = [
             'Small Poke Bowls',
