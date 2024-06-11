@@ -361,7 +361,7 @@ function reorderLinks() {
     if (subList) {
         console.log('Found sub-list element');
         var subLinkDivs = subList.getElementsByClassName('link-div');
-        console.log('Found link-div elements:', subLinkDivs);
+        console.log('Found sub-link-div elements:', subLinkDivs);
         var order = [
             'Small Poke Bowls',
             'Medium Poke Bowls',
@@ -372,8 +372,8 @@ function reorderLinks() {
         var orderedElements = [];
 
         order.forEach(function(item) {
-            subLinkDivs.forEach(function(subLinkDiv) {
-                var subLink = subLinkDiv.querySelector('#sub-link');
+            Array.prototype.forEach.call(subLinkDivs, function(subLinkDiv) {
+                var subLink = subLinkDiv.querySelector('.sub-link');
                 var subLinkText = subLink.querySelector('.sub-links-text');
                 if (subLinkText) {
                     console.log('Found sub-link-text:', subLinkText.textContent.trim());
