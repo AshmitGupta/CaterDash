@@ -316,7 +316,7 @@ var observer = new MutationObserver(function(mutationsList, observer) {
       var priceValue = parseFloat(mutation.target.textContent.replace(/\$\s*/, ''));
       
       // Determine the disabled state based on priceValue
-      var disabled = !isNaN(priceValue) && priceValue < 150;
+      var disabled = !isNaN(priceValue) && priceValue < 300;
 
       // Apply the updated styles to each button with the given ID
       buttons.forEach(function(button) {
