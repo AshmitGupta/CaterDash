@@ -367,6 +367,9 @@ if (mainHeading) {
     } else if (mainHeadingText === 'Pokey Okey') {
       updateContent('Pokey Okey', 'Catering', 'Experience authentic Hawaiian poke bowls with fresh, vibrant flavors through our catering services, perfect for any event.');
       toggleDisplay(true);
+    } else if (mainHeadingText === 'Obanhmi') {
+      updateContent('Obanhmi', 'Catering', 'Offering authentic Vietnamese banh mi sandwiches for catering, featuring fresh ingredients and bold flavors.');
+      toggleDisplay(true);
     } else {
         toggleDisplay(false);
     }
