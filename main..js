@@ -370,7 +370,7 @@ if (mainHeading) {
     } else if (mainHeadingText === 'Obanhmi') {
       updateContent('Obanhmi', 'Catering', 'Offering authentic Vietnamese banh mi sandwiches for catering, featuring fresh ingredients and bold flavors.');
       toggleDisplay(true);
-    } else if (mainHeadingText === 'Jo's Italian Deli') {
+    } else if (mainHeadingText === 'Jo\'s Italian Deli') {
       updateContent('Obanhmi', 'Catering', 'Experience authentic Italian cuisine with our catering service offering delectable pastas and artisanal sandwiches.');
       toggleDisplay(true);
     } else {
