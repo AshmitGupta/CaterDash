@@ -252,8 +252,8 @@ function filterDishes(subCategoryText) {
       defaultDate: fortyEightHoursFromNow,
       minDate: fortyEightHoursFromNow,
       minuteIncrement: 1,
-      minTime: "08:00",
-      maxTime: "22:00",
+      minTime: "11:00",
+      maxTime: "20:00",
       onClose: function(selectedDates, dateStr, instance) {
         dateTimeText.textContent = dateStr;
       }
