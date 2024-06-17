@@ -89,7 +89,7 @@ function filterDishes(subCategoryText) {
                 "default": 20
             }
         },
-        "Mangia\’s Sandwiches": {
+        "Mangia's Sandwiches": {
             "Sides Platter": 10,
             "Regular Sandwich Platter": 5,
             "Large Sandwich Platter": 10
