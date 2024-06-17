@@ -79,7 +79,7 @@ function filterDishes(subCategoryText) {
     const subHeading = document.getElementById('sub-heading');
 
     const restaurantServingSizes = {
-        "Jo's Italian Deli": {
+        "Jo\'s Italian Deli": {
             "Sides Platter": 8,
             "Pasta Platter": 4,
             "Sandwich Platter": 4,
@@ -88,6 +88,11 @@ function filterDishes(subCategoryText) {
                 "Waffles": 21,
                 "default": 20
             }
+        },
+        "Mangia’s Sandwiches": {
+            "Sides Platter": 10,
+            "Regular Sandwich Platter": 5,
+            "Large Sandwich Platter": 10
         }
     };
 
