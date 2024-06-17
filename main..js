@@ -72,41 +72,68 @@ subHeadingObserver.observe(subHeading, {
     });
   }
 
-  function filterDishes(subCategoryText) {
+function filterDishes(subCategoryText) {
+    var mainHeading = document.getElementById('main-heading');
     const formattedSubCategory = formatTextForComparison(subCategoryText);
     const perPersonDiv = document.querySelectorAll('.div-block-66');
     const subHeading = document.getElementById('sub-heading');
     if (subCategoryText) {
-      let displayText = toTitleCase(subCategoryText);
-      const suffixes = ['Platter', 'Tray', 'Trays', 'Platters', 'Cookies', 'Waffles'];
-      if (suffixes.some(suffix => displayText.endsWith(suffix))) {
-        if (displayText.endsWith('Trays')) {
-          displayText += ' (Serves 4)';
+        let displayText = toTitleCase(subCategoryText);
+        const suffixes = ['Platter', 'Tray', 'Trays', 'Platters', 'Cookies', 'Waffles'];
+        if (mainHeading.textContent === "Jo's Italian Deli") {
+            if (subCategoryText === 'Sides Platter') {
+                displayText += ' (Serves 8)';
+                togglePerPersonDivs(true);
+            } else if (subCategoryText === 'Pasta Platter' || subCategoryText === 'Sandwich Platter') {
+                displayText += ' (Serves 4)';
+                togglePerPersonDivs(true);
+            } else if (suffixes.some(suffix => displayText.endsWith(suffix))) {
+                if (displayText.endsWith('Trays')) {
+                    displayText += ' (Serves 4)';
+                    togglePerPersonDivs(true);
+                } else {
+                    if (displayText.endsWith('Waffles')) {
+                        displayText += ' (Serves 21)';
+                    } else {
+                        displayText += ' (Serves 20)';
+                    }
+                    togglePerPersonDivs(true);
+                }
+            } else {
+                togglePerPersonDivs(false);
+            }
         } else {
-          if (displayText.endsWith('Waffles')) {
-            displayText += ' (Serves 21)';
-          } else { displayText += ' (Serves 20)';}
+            if (suffixes.some(suffix => displayText.endsWith(suffix))) {
+                if (displayText.endsWith('Trays')) {
+                    displayText += ' (Serves 4)';
+                } else {
+                    if (displayText.endsWith('Waffles')) {
+                        displayText += ' (Serves 21)';
+                    } else {
+                        displayText += ' (Serves 20)';
+                    }
+                }
+                togglePerPersonDivs(true);
+            } else {
+                togglePerPersonDivs(false);
+            }
         }
-        togglePerPersonDivs(true);
-      } else {
-        togglePerPersonDivs(false);
-      }
-      subHeading.textContent = displayText;
+        subHeading.textContent = displayText;
     }
     sortDishes();
 
     const dishes = document.querySelectorAll('#main-list .w-dyn-item');
     dishes.forEach(function(dish) {
-      const dishSubCategory = formatTextForComparison(dish.querySelector('.sub-category').textContent.trim());
-      if (formattedSubCategory === dishSubCategory) {
-        dish.style.display = 'block';
-      } else {
-        dish.style.display = 'none';
-      }
+        const dishSubCategory = formatTextForComparison(dish.querySelector('.sub-category').textContent.trim());
+        if (formattedSubCategory === dishSubCategory) {
+            dish.style.display = 'block';
+        } else {
+            dish.style.display = 'none';
+        }
     });
 
     updateSubLinksStyle();
-  }
+}
 
   function setInitialDisplay() {
     const firstSubLink = document.querySelector('#sub-link');
