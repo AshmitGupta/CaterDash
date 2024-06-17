@@ -238,11 +238,11 @@ function filterDishes(subCategoryText) {
     var fortyEightHoursFromNow = new Date();
     fortyEightHoursFromNow.setHours(fortyEightHoursFromNow.getHours() + 48);
 
-    if (fortyEightHoursFromNow.getHours() < 8) {
-      fortyEightHoursFromNow.setHours(8);
-    } else if (fortyEightHoursFromNow.getHours() > 22 || (fortyEightHoursFromNow.getHours() === 22 && fortyEightHoursFromNow.getMinutes() > 0)) {
+    if (fortyEightHoursFromNow.getHours() < 11) {
+      fortyEightHoursFromNow.setHours(11);
+    } else if (fortyEightHoursFromNow.getHours() > 20 || (fortyEightHoursFromNow.getHours() === 20 && fortyEightHoursFromNow.getMinutes() > 0)) {
       fortyEightHoursFromNow.setDate(fortyEightHoursFromNow.getDate() + 1);
-      fortyEightHoursFromNow.setHours(8, 0);
+      fortyEightHoursFromNow.setHours(11, 0);
     }
 
     var fpInstance = flatpickr(dateTimeText, {
