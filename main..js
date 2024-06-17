@@ -386,19 +386,22 @@ function toggleDisplay(condition) {
 if (mainHeading) {
     var mainHeadingText = mainHeading.textContent.trim();
     if (mainHeadingText === 'Handi Grill') {
-        updateContent('Handi Grill', 'Catering', 'Delight in rich Indian flavors with our catering, offering traditional dishes like curries, biryanis, and naan, perfect for any event.');
+        updateContent('Handi Grill', 'Catering', 'Delight in rich Indian flavors with our catering, offering traditional dishes like curries, biryanis, and naan, perfect for any event');
         toggleDisplay(true);
     } else if (mainHeadingText === 'Saucin Staples') {
-        updateContent('Saucin Staples', 'Catering', 'Experience the perfect blend of traditional Indian flavors and contemporary culinary innovation with our catering.');
+        updateContent('Saucin Staples', 'Catering', 'Experience the perfect blend of traditional Indian flavors and contemporary culinary innovation with our catering');
         toggleDisplay(true);
     } else if (mainHeadingText === 'Pokey Okey') {
-      updateContent('Pokey Okey', 'Catering', 'Experience authentic Hawaiian poke bowls with fresh, vibrant flavors through our catering services, perfect for any event.');
+      updateContent('Pokey Okey', 'Catering', 'Experience authentic Hawaiian poke bowls with fresh, vibrant flavors through our catering services, perfect for any event');
       toggleDisplay(true);
     } else if (mainHeadingText === 'Obanhmi') {
-      updateContent('Obanhmi', 'Catering', 'Offering authentic Vietnamese banh mi sandwiches for catering, featuring fresh ingredients and bold flavors.');
+      updateContent('Obanhmi', 'Catering', 'Offering authentic Vietnamese banh mi sandwiches for catering, featuring fresh ingredients and bold flavors');
       toggleDisplay(true);
     } else if (mainHeadingText === 'Jo\'s Italian Deli') {
-      updateContent('Obanhmi', 'Catering', 'Experience authentic Italian cuisine with our catering service offering delectable pastas and artisanal sandwiches.');
+      updateContent('Jo\'s Italian Deli', 'Catering', 'Experience authentic Italian cuisine with our catering service offering delectable pastas and artisanal sandwiches');
+      toggleDisplay(true);
+    } else if (mainHeadingText === 'Mangia\'s Sandwiches') {
+      updateContent('Mangia\'s Sandwiches', 'Catering', 'Savor the taste of Italy with our catering service featuring a variety of artisanal sandwiches');
       toggleDisplay(true);
     } else {
         toggleDisplay(false);
