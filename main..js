@@ -77,28 +77,34 @@ function filterDishes(subCategoryText) {
     const formattedSubCategory = formatTextForComparison(subCategoryText);
     const perPersonDiv = document.querySelectorAll('.div-block-66');
     const subHeading = document.getElementById('sub-heading');
+
+    const restaurantServingSizes = {
+        "Jo's Italian Deli": {
+            "Sides Platter": 8,
+            "Pasta Platter": 4,
+            "Sandwich Platter": 4,
+            "default": {
+                "Trays": 4,
+                "Waffles": 21,
+                "default": 20
+            }
+        }
+    };
+
     if (subCategoryText) {
         let displayText = toTitleCase(subCategoryText);
         const suffixes = ['Platter', 'Tray', 'Trays', 'Platters', 'Cookies', 'Waffles'];
-        if (mainHeading.textContent === "Jo\'s Italian Deli") {
-            if (subCategoryText === 'Sides Platter') {
-                displayText += ' (Serves 8)';
-                togglePerPersonDivs(true);
-            } else if (subCategoryText === 'Pasta Platter' || subCategoryText === 'Sandwich Platter') {
-                displayText += ' (Serves 4)';
+        
+        if (mainHeading && restaurantServingSizes[mainHeading.textContent]) {
+            const servingSizes = restaurantServingSizes[mainHeading.textContent];
+
+            if (servingSizes[subCategoryText]) {
+                displayText += ` (Serves ${servingSizes[subCategoryText]})`;
                 togglePerPersonDivs(true);
             } else if (suffixes.some(suffix => displayText.endsWith(suffix))) {
-                if (displayText.endsWith('Trays')) {
-                    displayText += ' (Serves 4)';
-                    togglePerPersonDivs(true);
-                } else {
-                    if (displayText.endsWith('Waffles')) {
-                        displayText += ' (Serves 21)';
-                    } else {
-                        displayText += ' (Serves 20)';
-                    }
-                    togglePerPersonDivs(true);
-                }
+                const suffixServingSize = servingSizes.default[suffixes.find(suffix => displayText.endsWith(suffix))];
+                displayText += ` (Serves ${suffixServingSize || servingSizes.default.default})`;
+                togglePerPersonDivs(true);
             } else {
                 togglePerPersonDivs(false);
             }
@@ -118,8 +124,10 @@ function filterDishes(subCategoryText) {
                 togglePerPersonDivs(false);
             }
         }
+        
         subHeading.textContent = displayText;
     }
+    
     sortDishes();
 
     const dishes = document.querySelectorAll('#main-list .w-dyn-item');
