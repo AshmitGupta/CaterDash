@@ -79,7 +79,7 @@ function filterDishes(subCategoryText) {
     const subHeading = document.getElementById('sub-heading');
 
     const restaurantServingSizes = {
-        "Jo\'s Italian Deli": {
+        "Jo's Italian Deli": {
             "Sides Platter": 8,
             "Pasta Platter": 4,
             "Sandwich Platter": 4,
