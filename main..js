@@ -80,7 +80,7 @@ function filterDishes(subCategoryText) {
     if (subCategoryText) {
         let displayText = toTitleCase(subCategoryText);
         const suffixes = ['Platter', 'Tray', 'Trays', 'Platters', 'Cookies', 'Waffles'];
-        if (mainHeading.textContent === "Jo's Italian Deli") {
+        if (mainHeading.textContent === "Jo\'s Italian Deli") {
             if (subCategoryText === 'Sides Platter') {
                 displayText += ' (Serves 8)';
                 togglePerPersonDivs(true);
