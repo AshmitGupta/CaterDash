@@ -93,6 +93,9 @@ function filterDishes(subCategoryText) {
             "Sides Platter": 10,
             "Regular Sandwich Platter": 5,
             "Large Sandwich Platter": 10
+        },
+      "Obanhmi": {
+            "Box": 20
         }
     };
 
