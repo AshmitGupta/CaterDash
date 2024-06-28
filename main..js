@@ -95,7 +95,8 @@ function filterDishes(subCategoryText) {
             "Large Sandwich Platter": 10
         },
       "Obanhmi": {
-            "Box": 20
+            "Sides Box": 20,
+            "Banh Mi Box": 20
         }
     };
 
