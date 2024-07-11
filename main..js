@@ -420,6 +420,9 @@ if (mainHeading) {
     } else if (mainHeadingText === 'Mangia\'s Sandwiches') {
       updateContent('Mangia\'s Sandwiches', 'Catering', 'Savor the taste of Italy with our catering service featuring a variety of artisanal sandwiches');
       toggleDisplay(true);
+    } else if (mainHeadingText === 'La Mezcaleria') {
+      updateContent('La Mezcaleria', 'Catering', 'Delight in authentic Mexican flavors with our catering service, offering a selection of handcrafted tacos and traditional dishes');
+      toggleDisplay(true);
     } else {
         toggleDisplay(false);
     }
