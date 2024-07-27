@@ -97,6 +97,9 @@ function filterDishes(subCategoryText) {
       "Obanhmi": {
             "Sides Box": 20,
             "Banh Mi Box": 20
+        },
+      "Sweet Obsession": {
+            "Pastry Box": 12
         }
     };
 
@@ -422,6 +425,9 @@ if (mainHeading) {
       toggleDisplay(true);
     } else if (mainHeadingText === 'La Mezcaleria') {
       updateContent('La Mezcaleria', 'Catering', 'Delight in authentic Mexican flavors with our catering service, offering a selection of handcrafted tacos and traditional dishes');
+      toggleDisplay(true);
+    } else if (mainHeadingText === 'Sweet Obsession') {
+      updateContent('Sweet Obsession', 'Catering', 'Offering delicious and diverse catering with beverages, pastries, and cakes to elevate every occasion.');
       toggleDisplay(true);
     } else {
         toggleDisplay(false);
