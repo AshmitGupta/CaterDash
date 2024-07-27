@@ -99,7 +99,9 @@ function filterDishes(subCategoryText) {
             "Banh Mi Box": 20
         },
       "Sweet Obsession": {
-            "Pastry Box": 12
+            "Pastry Box": 12,
+            "Food": 20,
+            "Beverages": 20
         }
     };
 
