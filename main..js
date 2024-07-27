@@ -101,7 +101,7 @@ function filterDishes(subCategoryText) {
       "Sweet Obsession": {
             "Pastry Box": 12,
             "Food": 20,
-            "Beverages": 20
+            "Beverages": 12
         }
     };
 
