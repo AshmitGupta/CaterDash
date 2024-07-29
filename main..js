@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
       if (firstSubLink) {
         setTimeout(function() {
           filterDishes(firstSubLink.textContent.trim());
-        }, 500);
+        }, 100);
       }
     }
   }, 0);
