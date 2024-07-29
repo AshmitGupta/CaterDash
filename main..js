@@ -165,6 +165,7 @@ function filterDishes(subCategoryText) {
       updateSubLinksStyle();
     } else {
     }
+    firstSubLink.click();
   }
 
   function closeDropdown() {
