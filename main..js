@@ -456,7 +456,6 @@ if (headingText.trim() === "Club Kitchen") {
         clubDiv.style.display = "flex";
     } else {
         console.error("clubDiv element not found.");
-        return;
     }
 
     var items = ["Link 1", "Link 2", "Link 3", "Link 4"];
