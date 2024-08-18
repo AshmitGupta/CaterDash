@@ -448,6 +448,32 @@ if (mainHeading) {
     }
 }
 
+var itemsRestaurant1 = [
+    "Small Platter",
+    "Medium Platter",
+    "Large Platter",
+    "Very Large Platter",
+    "Jumbo Large Platter",
+    "Very Jumbo Large Platter",
+    "Super Large Platter"
+];
+
+var itemsRestaurant2 = [
+    "Single Serve",
+    "Family Pack",
+    "Party Pack",
+    "Feast Pack",
+    "Mega Feast Pack"
+];
+
+var itemsRestaurant3 = [
+    "Individual Meal",
+    "Couples Meal",
+    "Family Meal",
+    "Office Party Pack",
+    "Corporate Pack"
+];
+
 document.addEventListener("DOMContentLoaded", function() {
     var headingText = document.getElementById("main-heading").innerText;
     var clubDiv = document.getElementById("club-div");
@@ -459,18 +485,16 @@ document.addEventListener("DOMContentLoaded", function() {
             console.error("clubDiv element not found.");
         }
 
-        var existingLinks = clubDiv.querySelectorAll("#main-sub-link");
-        existingLinks.forEach(function(link) {
-            link.remove();
-        });
+        function loadItemsForRestaurant(items) {
+            var existingLinks = clubDiv.querySelectorAll("#main-sub-link");
+            existingLinks.forEach(function(link) {
+                link.remove();
+            });
 
-        var items = ["Small Platter",
-                     "Medium Platter",
-                     "Large Platter",
-                     "Very Large Platter ",
-                     "Jumbo Large Platter ",
-                     "Very Jumbo Large Platter ",
-                     "Super Large Platter "];
+            items.forEach(function(item) {
+                createLinkBlock(item);
+            });
+        }
 
         function createLinkBlock(text) {
             var mainSubLink = document.createElement("div");
@@ -492,14 +516,33 @@ document.addEventListener("DOMContentLoaded", function() {
             clubDiv.appendChild(mainSubLink);
         }
 
-        items.forEach(function(item) {
-            createLinkBlock(item);
+        // Event listeners for each link inside the sub-list
+        document.querySelectorAll('#sub-list .sub-links-text').forEach(function(link) {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                var linkText = link.textContent.trim();
+
+                // Load the correct items based on the link text
+                if (linkText === 'Restaurant 1') {
+                    loadItemsForRestaurant(itemsRestaurant1);
+                } else if (linkText === 'Restaurant 2') {
+                    loadItemsForRestaurant(itemsRestaurant2);
+                } else if (linkText === 'Restaurant 3') {
+                    loadItemsForRestaurant(itemsRestaurant3);
+                } else {
+                    console.error("No items found for the selected restaurant.");
+                }
+            });
         });
     } else {
         console.error("Main heading does not match 'Club Kitchen'.");
         clubDiv.style.display = "none";
     }
+
+    var config = { childList: true, subtree: true, characterData: true };
+    observer.observe(targetNode, config);
 });
+
 
 var config = { childList: true, subtree: true, characterData: true };
 observer.observe(targetNode, config);
