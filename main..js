@@ -473,7 +473,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             var textDiv = document.createElement("div");
             textDiv.id = "sub-links-club-text";
-            textDiv.className = "sub-links-club-text";
+            textDiv.className = "sub-links-club";
             textDiv.innerText = text;
 
             linkBlock.appendChild(textDiv);
