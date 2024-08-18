@@ -466,9 +466,10 @@ document.addEventListener("DOMContentLoaded", function() {
             mainSubLink.id = "main-sub-link";
             mainSubLink.className = "link-div";
 
-            var linkBlock = document.createElement("div");
+            var linkBlock = document.createElement("a");
             linkBlock.id = "sub-link-club";
-            linkBlock.className = "sub-link-club";
+            linkBlock.className = "sub-link-club w-inline-block";
+            linkBlock.href = "#";
 
             var textDiv = document.createElement("div");
             textDiv.id = "sub-links-club-text";
@@ -477,7 +478,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
             linkBlock.appendChild(textDiv);
             mainSubLink.appendChild(linkBlock);
-
             clubDiv.appendChild(mainSubLink);
         }
 
@@ -492,7 +492,6 @@ document.addEventListener("DOMContentLoaded", function() {
     var config = { childList: true, subtree: true, characterData: true };
     observer.observe(targetNode, config);
 });
-
 
 var config = { childList: true, subtree: true, characterData: true };
 observer.observe(targetNode, config);
