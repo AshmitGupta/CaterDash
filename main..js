@@ -449,38 +449,46 @@ if (mainHeading) {
 }
 
 var headingText = document.getElementById("main-heading").innerText;
-var headingText = document.getElementById("main-heading").innerText;
 var clubDiv = document.getElementById("club-div");
 var mainSubLink = document.getElementById("main-sub-link");
 
 if (headingText.trim() === "Club Kitchen") {
-    clubDiv.style.display = "flex";
-  
-    var items = ["Link 1", "Link 2", "Link 3", "Link 4"];
-
-    // Function to create a new link block
-    function createLinkBlock(text) {
-        // Create the outer div for the link block
-        var linkBlock = document.createElement("div");
-        linkBlock.className = "sub-link-club";
-
-        // Create the text div
-        var textDiv = document.createElement("div");
-        textDiv.className = "sub-links-club-text";
-        textDiv.innerText = text;
-
-        // Append the text div to the link block
-        linkBlock.appendChild(textDiv);
-
-        // Append the link block to the main sub link div
-        mainSubLink.appendChild(linkBlock);
+    if (clubDiv) {
+        clubDiv.style.display = "flex";
+    } else {
+        console.error("clubDiv element not found.");
+        return;
     }
 
-    items.forEach(function(item) {
-        createLinkBlock(item);
-    });
+    if (mainSubLink) {
+        var items = ["Link 1", "Link 2", "Link 3", "Link 4"];
+
+        // Function to create a new link block
+        function createLinkBlock(text) {
+            // Create the outer div for the link block
+            var linkBlock = document.createElement("div");
+            linkBlock.id = "sub-link-club";
+
+            // Create the text div
+            var textDiv = document.createElement("div");
+            textDiv.id = "sub-links-club-text";
+            textDiv.innerText = text;
+
+            linkBlock.appendChild(textDiv);
+
+            mainSubLink.appendChild(linkBlock);
+        }
+
+        items.forEach(function(item) {
+            createLinkBlock(item);
+        });
+    } else {
+        console.error("mainSubLink element not found.");
+        return;
+    }
 } else {
-    clubDiv.style.display = "none";
+    console.error("Main heading does not match 'Club Kitchen'.");
+    clubDiv.style.display = "none"; // Hide the div
 }
 
 var config = { childList: true, subtree: true, characterData: true };
