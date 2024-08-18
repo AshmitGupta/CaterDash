@@ -459,7 +459,7 @@ document.addEventListener("DOMContentLoaded", function() {
             console.error("clubDiv element not found.");
         }
 
-        var items = ["Link 1", "Link 2", "Link 3"];
+        var items = ["Small Platter", "Medium Platter", "Large Platter"];
 
         function createLinkBlock(text) {
             var mainSubLink = document.createElement("div");
