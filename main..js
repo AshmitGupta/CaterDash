@@ -534,6 +534,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             });
         });
+        loadItemsForRestaurant(itemsRestaurant1);
     } else {
         console.error("Main heading does not match 'Club Kitchen'.");
         clubDiv.style.display = "none";
