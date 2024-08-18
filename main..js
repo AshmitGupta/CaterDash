@@ -464,7 +464,13 @@ document.addEventListener("DOMContentLoaded", function() {
             link.remove();
         });
 
-        var items = ["Small Platter", "Medium Platter", "Large Platter"];
+        var items = ["Small Platter",
+                     "Medium Platter",
+                     "Large Platter",
+                     "Very Large Platter ",
+                     "Jumbo Large Platter ",
+                     "Very Jumbo Large Platter ",
+                     "Super Large Platter "];
 
         function createLinkBlock(text) {
             var mainSubLink = document.createElement("div");
