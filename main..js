@@ -448,6 +448,15 @@ if (mainHeading) {
     }
 }
 
+var headingText = document.getElementById("main-heading").innerText;
+var clubDiv = document.getElementById("club-div");
+
+if (headingText.trim() === "Club Kitchen") {
+    clubDiv.style.display = "block";
+} else {
+    clubDiv.style.display = "none";
+}
+
 
 var config = { childList: true, subtree: true, characterData: true };
 observer.observe(targetNode, config);
