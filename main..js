@@ -464,7 +464,7 @@ document.addEventListener("DOMContentLoaded", function() {
         function createLinkBlock(text) {
             var mainSubLink = document.createElement("div");
             mainSubLink.id = "main-sub-link";
-            mainSubLink.className = "link-div";
+            mainSubLink.className = "link-div adjusted";
 
             var linkBlock = document.createElement("a");
             linkBlock.id = "sub-link-club";
