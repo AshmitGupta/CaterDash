@@ -448,47 +448,51 @@ if (mainHeading) {
     }
 }
 
-var headingText = document.getElementById("main-heading").innerText;
-var clubDiv = document.getElementById("club-div");
+document.addEventListener("DOMContentLoaded", function() {
+    var headingText = document.getElementById("main-heading").innerText;
+    var clubDiv = document.getElementById("club-div");
 
-if (headingText.trim() === "Club Kitchen") {
-    if (clubDiv) {
-        clubDiv.style.display = "flex";
+    if (headingText.trim() === "Club Kitchen") {
+        if (clubDiv) {
+            clubDiv.style.display = "flex";
+        } else {
+            console.error("clubDiv element not found.");
+        }
+
+        var items = ["Link 1", "Link 2", "Link 3", "Link 4"];
+
+        function createLinkBlock(text) {
+            var mainSubLink = document.createElement("div");
+            mainSubLink.id = "main-sub-link";
+            mainSubLink.className = "link-div";
+
+            var linkBlock = document.createElement("div");
+            linkBlock.id = "sub-link-club";
+            linkBlock.className = "sub-link-club";
+
+            var textDiv = document.createElement("div");
+            textDiv.id = "sub-links-club-text";
+            textDiv.className = "sub-links-club-text";
+            textDiv.innerText = text;
+
+            linkBlock.appendChild(textDiv);
+            mainSubLink.appendChild(linkBlock);
+
+            clubDiv.appendChild(mainSubLink);
+        }
+
+        items.forEach(function(item) {
+            createLinkBlock(item);
+        });
     } else {
-        console.error("clubDiv element not found.");
+        console.error("Main heading does not match 'Club Kitchen'.");
+        clubDiv.style.display = "none";
     }
 
-    var items = ["Link 1", "Link 2", "Link 3", "Link 4"];
+    var config = { childList: true, subtree: true, characterData: true };
+    observer.observe(targetNode, config);
+});
 
-    // Function to create a new link block
-    function createLinkBlock(text) {
-        // Create the outer div for the main-sub-link block
-        var mainSubLink = document.createElement("div");
-        mainSubLink.id = "main-sub-link";
-
-        // Create the sub-link-club div
-        var linkBlock = document.createElement("div");
-        linkBlock.id = "sub-link-club";
-
-        // Create the text div
-        var textDiv = document.createElement("div");
-        textDiv.id = "sub-links-club-text";
-        textDiv.innerText = text;
-
-        linkBlock.appendChild(textDiv);
-        mainSubLink.appendChild(linkBlock);
-
-        // Append the entire main-sub-link block to the club-div
-        clubDiv.appendChild(mainSubLink);
-    }
-
-    items.forEach(function(item) {
-        createLinkBlock(item);
-    });
-} else {
-    console.error("Main heading does not match 'Club Kitchen'.");
-    clubDiv.style.display = "none"; // Hide the div
-}
 
 var config = { childList: true, subtree: true, characterData: true };
 observer.observe(targetNode, config);
