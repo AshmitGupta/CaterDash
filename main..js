@@ -459,7 +459,7 @@ document.addEventListener("DOMContentLoaded", function() {
             console.error("clubDiv element not found.");
         }
 
-        var items = ["Link 1", "Link 2", "Link 3", "Link 4"];
+        var items = ["This is some text inside of a div block."];
 
         function createLinkBlock(text) {
             var mainSubLink = document.createElement("div");
@@ -473,7 +473,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             var textDiv = document.createElement("div");
             textDiv.id = "sub-links-club-text";
-            textDiv.className = "sub-links-club";
+            textDiv.className = "sub-links-club-text";
             textDiv.innerText = text;
 
             linkBlock.appendChild(textDiv);
@@ -488,9 +488,6 @@ document.addEventListener("DOMContentLoaded", function() {
         console.error("Main heading does not match 'Club Kitchen'.");
         clubDiv.style.display = "none";
     }
-
-    var config = { childList: true, subtree: true, characterData: true };
-    observer.observe(targetNode, config);
 });
 
 var config = { childList: true, subtree: true, characterData: true };
