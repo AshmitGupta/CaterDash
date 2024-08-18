@@ -459,6 +459,11 @@ document.addEventListener("DOMContentLoaded", function() {
             console.error("clubDiv element not found.");
         }
 
+        var existingLinks = clubDiv.querySelectorAll("#main-sub-link");
+        existingLinks.forEach(function(link) {
+            link.remove();
+        });
+
         var items = ["Small Platter", "Medium Platter", "Large Platter"];
 
         function createLinkBlock(text) {
