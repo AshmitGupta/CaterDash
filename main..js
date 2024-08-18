@@ -452,7 +452,7 @@ var headingText = document.getElementById("main-heading").innerText;
 var clubDiv = document.getElementById("club-div");
 
 if (headingText.trim() === "Club Kitchen") {
-    clubDiv.style.display = "block";
+    clubDiv.style.display = "flex";
 } else {
     clubDiv.style.display = "none";
 }
