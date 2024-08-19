@@ -525,9 +525,9 @@ document.addEventListener("DOMContentLoaded", function() {
             var products = document.querySelectorAll('#main-list .w-dyn-item');
 
             products.forEach(function(product) {
-                var productCategory = product.querySelector('.category').textContent.trim();
+                var productSubCategory = product.querySelector('.sub-category').textContent.trim();
 
-                if (productCategory.includes(category)) {
+                if (productSubCategory.includes(category)) {
                     product.style.display = 'block';
                 } else {
                     product.style.display = 'none';
@@ -564,8 +564,6 @@ document.addEventListener("DOMContentLoaded", function() {
     var config = { childList: true, subtree: true, characterData: true };
     observer.observe(targetNode, config);
 });
-
-
 
 var config = { childList: true, subtree: true, characterData: true };
 observer.observe(targetNode, config);
