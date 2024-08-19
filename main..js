@@ -474,103 +474,98 @@ var itemsRestaurant3 = [
     "Corporate Pack"
 ];
 
-document.addEventListener("DOMContentLoaded", function() {
-    var headingText = document.getElementById("main-heading").innerText;
-    var clubDiv = document.getElementById("club-div");
+var headingText = document.getElementById("main-heading").innerText;
+var clubDiv = document.getElementById("club-div");
 
-    if (headingText.trim() === "Club Kitchen") {
-        if (clubDiv) {
-            clubDiv.style.display = "flex";
-        } else {
-            console.error("clubDiv element not found.");
-        }
-
-        function loadItemsForRestaurant(items) {
-            var existingLinks = clubDiv.querySelectorAll("#main-sub-link");
-            existingLinks.forEach(function(link) {
-                link.remove();
-            });
-
-            items.forEach(function(item) {
-                createLinkBlock(item);
-            });
-        }
-
-        function createLinkBlock(text) {
-            var mainSubLink = document.createElement("div");
-            mainSubLink.id = "main-sub-link";
-            mainSubLink.className = "link-div adjusted";
-
-            var linkBlock = document.createElement("a");
-            linkBlock.id = "sub-link-club";
-            linkBlock.className = "sub-link-club w-inline-block";
-            linkBlock.href = "#";
-
-            var textDiv = document.createElement("div");
-            textDiv.id = "sub-links-club-text";
-            textDiv.className = "sub-links-club";
-            textDiv.innerText = text;
-
-            linkBlock.appendChild(textDiv);
-            mainSubLink.appendChild(linkBlock);
-            clubDiv.appendChild(mainSubLink);
-
-            // Add the filtering functionality
-            linkBlock.addEventListener('click', function(event) {
-                event.preventDefault();
-                filterProductsByCategory(text);
-            });
-        }
-
-        function filterProductsByCategory(subCategory) {
-            var products = document.querySelectorAll('#main-list .w-dyn-item');
-            const mainCategory = headingText.trim().replace(" ", "-"); // Converts "Restaurant 1" to "Restaurant-1"
-
-            products.forEach(function(product) {
-                var productSubCategory = product.querySelector('.sub-category').textContent.trim();
-                console.log("Whole SKU is: ", productSubCategory);
-                console.log("Main Category is: ", mainCategory);
-                console.log("Sub Category is: ", subCategory);
-                if (productSubCategory.includes(mainCategory) && productSubCategory.includes(subCategory)) {
-                    product.style.display = 'block';
-                } else {
-                    product.style.display = 'none';
-                }
-            });
-
-            sortDishes(); // Call existing sort function if necessary
-        }
-
-        // Event listeners for each link inside the sub-list
-        document.querySelectorAll('#sub-list .sub-links-text').forEach(function(link) {
-            link.addEventListener('click', function(event) {
-                event.preventDefault();
-                var linkText = link.textContent.trim();
-
-                // Load the correct items based on the link text
-                if (linkText === 'Restaurant 1') {
-                    loadItemsForRestaurant(itemsRestaurant1);
-                } else if (linkText === 'Restaurant 2') {
-                    loadItemsForRestaurant(itemsRestaurant2);
-                } else if (linkText === 'Restaurant 3') {
-                    loadItemsForRestaurant(itemsRestaurant3);
-                } else {
-                    console.error("No items found for the selected restaurant.");
-                }
-            });
-        });
-
-        // Load items for "Restaurant 1" by default when the page loads
-        loadItemsForRestaurant(itemsRestaurant1);
-
+if (headingText.trim() === "Club Kitchen") {
+    if (clubDiv) {
+        clubDiv.style.display = "flex";
     } else {
-        console.error("Main heading does not match 'Club Kitchen'.");
-        clubDiv.style.display = "none";
+        console.error("clubDiv element not found.");
     }
 
-    var config = { childList: true, subtree: true, characterData: true };
-    observer.observe(targetNode, config);
-});
+    function loadItemsForRestaurant(items) {
+        var existingLinks = clubDiv.querySelectorAll("#main-sub-link");
+        existingLinks.forEach(function(link) {
+            link.remove();
+        });
+
+        items.forEach(function(item) {
+            createLinkBlock(item);
+        });
+    }
+
+    function createLinkBlock(text) {
+        var mainSubLink = document.createElement("div");
+        mainSubLink.id = "main-sub-link";
+        mainSubLink.className = "link-div adjusted";
+
+        var linkBlock = document.createElement("a");
+        linkBlock.id = "sub-link-club";
+        linkBlock.className = "sub-link-club w-inline-block";
+        linkBlock.href = "#";
+
+        var textDiv = document.createElement("div");
+        textDiv.id = "sub-links-club-text";
+        textDiv.className = "sub-links-club";
+        textDiv.innerText = text;
+
+        linkBlock.appendChild(textDiv);
+        mainSubLink.appendChild(linkBlock);
+        clubDiv.appendChild(mainSubLink);
+
+        // Add the filtering functionality
+        linkBlock.addEventListener('click', function(event) {
+            event.preventDefault();
+            filterProductsByCategory(text);
+        });
+    }
+
+    function filterProductsByCategory(subCategory) {
+        var products = document.querySelectorAll('#main-list .w-dyn-item');
+        const mainCategory = headingText.trim().replace(" ", "-"); // Converts "Restaurant 1" to "Restaurant-1"
+
+        products.forEach(function(product) {
+            var productSubCategory = product.querySelector('.sub-category').textContent.trim();
+            console.log("Whole SKU is: ", productSubCategory);
+            console.log("Main Category is: ", mainCategory);
+            console.log("Sub Category is: ", subCategory);
+            if (productSubCategory.includes(mainCategory) && productSubCategory.includes(subCategory)) {
+                product.style.display = 'block';
+            } else {
+                product.style.display = 'none';
+            }
+        });
+
+        sortDishes(); // Call existing sort function if necessary
+    }
+
+    // Event listeners for each link inside the sub-list
+    document.querySelectorAll('#sub-list .sub-links-text').forEach(function(link) {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            var linkText = link.textContent.trim();
+
+            // Load the correct items based on the link text
+            if (linkText === 'Restaurant 1') {
+                loadItemsForRestaurant(itemsRestaurant1);
+            } else if (linkText === 'Restaurant 2') {
+                loadItemsForRestaurant(itemsRestaurant2);
+            } else if (linkText === 'Restaurant 3') {
+                loadItemsForRestaurant(itemsRestaurant3);
+            } else {
+                console.error("No items found for the selected restaurant.");
+            }
+        });
+    });
+
+    // Load items for "Restaurant 1" by default when the page loads
+    loadItemsForRestaurant(itemsRestaurant1);
+
+} else {
+    console.error("Main heading does not match 'Club Kitchen'.");
+    clubDiv.style.display = "none";
+}
 
 var config = { childList: true, subtree: true, characterData: true };
 observer.observe(targetNode, config);
