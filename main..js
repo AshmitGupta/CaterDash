@@ -524,15 +524,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
         function filterProductsByCategory(subCategory) {
             var products = document.querySelectorAll('#main-list .w-dyn-item');
-            const mainCategory = headingText.trim();
-            const formattedMainCategory = formatTextForComparison(mainCategory); // Convert "Restaurant 1" to "restaurant-1"
-            const formattedSubCategory = formatTextForComparison(subCategory); // Convert "Small Platter" to "small-platter"
+            const mainCategory = headingText.trim().replace(" ", "-"); // Converts "Restaurant 1" to "Restaurant-1"
 
             products.forEach(function(product) {
-                var productSubCategory = formatTextForComparison(product.querySelector('.sub-category').textContent.trim());
+                var productSubCategory = product.querySelector('.sub-category').textContent.trim();
 
-                // Check if the product sub-category contains both the main category and the sub-category
-                if (productSubCategory.includes(formattedMainCategory) && productSubCategory.includes(formattedSubCategory)) {
+                // Check if the product sub-category contains both the main category and the
+                                if (productSubCategory.includes(mainCategory) && productSubCategory.includes(subCategory)) {
                     product.style.display = 'block';
                 } else {
                     product.style.display = 'none';
