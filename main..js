@@ -537,7 +537,7 @@ if (headingText.trim() === "Club Kitchen") {
             }
         });
 
-        sortDishes(); // Call existing sort function if necessary
+        //sortDishes(); // Call existing sort function if necessary
     }
 
     // Event listeners for each link inside the sub-list
