@@ -523,7 +523,8 @@ if (headingText.trim() === "Club Kitchen") {
 
     function filterProductsByCategory(subCategory) {
         var products = document.querySelectorAll('#main-list .w-dyn-item');
-        const mainCategory = headingText.trim().replace(" ", "-"); // Converts "Restaurant 1" to "Restaurant-1"
+        const subHeadingText = document.getElementById('sub-heading').textContent.trim();
+        const mainCategory = subHeadingText.trim().replace(" ", "-");
 
         products.forEach(function(product) {
             var productSubCategory = product.querySelector('.sub-category').textContent.trim();
