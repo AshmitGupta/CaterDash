@@ -528,9 +528,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
             products.forEach(function(product) {
                 var productSubCategory = product.querySelector('.sub-category').textContent.trim();
-
-                // Check if the product sub-category contains both the main category and the
-                                if (productSubCategory.includes(mainCategory) && productSubCategory.includes(subCategory)) {
+                console.log("Whole SKU is: ", productSubCategory);
+                console.log("Main Category is: ", mainCategory);
+                console.log("Sub Category is: ", subCategory);
+                if (productSubCategory.includes(mainCategory) && productSubCategory.includes(subCategory)) {
                     product.style.display = 'block';
                 } else {
                     product.style.display = 'none';
