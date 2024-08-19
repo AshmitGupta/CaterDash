@@ -515,33 +515,40 @@ document.addEventListener("DOMContentLoaded", function() {
             mainSubLink.appendChild(linkBlock);
             clubDiv.appendChild(mainSubLink);
 
+            // Add the filtering functionality
             linkBlock.addEventListener('click', function(event) {
                 event.preventDefault();
                 filterProductsByCategory(text);
             });
         }
 
-        function filterProductsByCategory(category) {
+        function filterProductsByCategory(subCategory) {
             var products = document.querySelectorAll('#main-list .w-dyn-item');
+            const mainCategory = headingText.trim();
+            const formattedMainCategory = formatTextForComparison(mainCategory); // Convert "Restaurant 1" to "restaurant-1"
+            const formattedSubCategory = formatTextForComparison(subCategory); // Convert "Small Platter" to "small-platter"
 
             products.forEach(function(product) {
-                var productSubCategory = product.querySelector('.sub-category').textContent.trim();
+                var productSubCategory = formatTextForComparison(product.querySelector('.sub-category').textContent.trim());
 
-                if (productSubCategory.includes(category)) {
+                // Check if the product sub-category contains both the main category and the sub-category
+                if (productSubCategory.includes(formattedMainCategory) && productSubCategory.includes(formattedSubCategory)) {
                     product.style.display = 'block';
                 } else {
                     product.style.display = 'none';
                 }
             });
 
-            sortDishes();
+            sortDishes(); // Call existing sort function if necessary
         }
 
+        // Event listeners for each link inside the sub-list
         document.querySelectorAll('#sub-list .sub-links-text').forEach(function(link) {
             link.addEventListener('click', function(event) {
                 event.preventDefault();
                 var linkText = link.textContent.trim();
 
+                // Load the correct items based on the link text
                 if (linkText === 'Restaurant 1') {
                     loadItemsForRestaurant(itemsRestaurant1);
                 } else if (linkText === 'Restaurant 2') {
@@ -554,6 +561,7 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         });
 
+        // Load items for "Restaurant 1" by default when the page loads
         loadItemsForRestaurant(itemsRestaurant1);
 
     } else {
