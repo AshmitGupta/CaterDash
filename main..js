@@ -514,15 +514,34 @@ document.addEventListener("DOMContentLoaded", function() {
             linkBlock.appendChild(textDiv);
             mainSubLink.appendChild(linkBlock);
             clubDiv.appendChild(mainSubLink);
+
+            linkBlock.addEventListener('click', function(event) {
+                event.preventDefault();
+                filterProductsByCategory(text);
+            });
         }
 
-        // Event listeners for each link inside the sub-list
+        function filterProductsByCategory(category) {
+            var products = document.querySelectorAll('#main-list .w-dyn-item');
+
+            products.forEach(function(product) {
+                var productCategory = product.querySelector('.category').textContent.trim();
+
+                if (productCategory.includes(category)) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+
+            sortDishes();
+        }
+
         document.querySelectorAll('#sub-list .sub-links-text').forEach(function(link) {
             link.addEventListener('click', function(event) {
                 event.preventDefault();
                 var linkText = link.textContent.trim();
 
-                // Load the correct items based on the link text
                 if (linkText === 'Restaurant 1') {
                     loadItemsForRestaurant(itemsRestaurant1);
                 } else if (linkText === 'Restaurant 2') {
@@ -534,7 +553,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             });
         });
+
         loadItemsForRestaurant(itemsRestaurant1);
+
     } else {
         console.error("Main heading does not match 'Club Kitchen'.");
         clubDiv.style.display = "none";
@@ -543,6 +564,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var config = { childList: true, subtree: true, characterData: true };
     observer.observe(targetNode, config);
 });
+
 
 
 var config = { childList: true, subtree: true, characterData: true };
