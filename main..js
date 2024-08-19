@@ -159,7 +159,7 @@ function filterDishes(subCategoryText) {
     const dishes = document.querySelectorAll('#main-list .w-dyn-item');
     dishes.forEach(function(dish) {
         const dishSubCategory = formatTextForComparison(dish.querySelector('.sub-category').textContent.trim());
-        if (formattedSubCategory === dishSubCategory) {
+        if (dishSubCategory.includes(formattedSubCategory)) {
             dish.style.display = 'block';
         } else {
             dish.style.display = 'none';
