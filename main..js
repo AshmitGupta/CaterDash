@@ -26,6 +26,23 @@ document.addEventListener("DOMContentLoaded", function() {
     cartItem.style.display = 'block';
   });
 
+function sortDishes() {
+  var mainList = document.querySelector('#main-list');
+  var dishes = Array.from(mainList.querySelectorAll('.w-dyn-item')).filter(function(dish) {
+    return dish.style.display !== 'none';
+  });
+
+  dishes.sort(function(a, b) {
+    var numA = parseInt(a.querySelector('.sorting-number').textContent, 10);
+    var numB = parseInt(b.querySelector('.sorting-number').textContent, 10);
+    return numA - numB;
+  });
+
+  dishes.forEach(function(dish) {
+    mainList.appendChild(dish);
+  });
+}
+  
   function toTitleCase(str) {
     return str.replace(/\w\S*/g, function(txt) {
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
@@ -60,29 +77,12 @@ subHeadingObserver.observe(subHeading, {
   subtree: true
 });
 
-  function togglePerPersonDivs(shouldShow) {
-    const perPersonDivs = document.querySelectorAll('.div-block-66');
-    perPersonDivs.forEach(function(div) {
-      div.style.display = shouldShow ? 'flex' : 'none';
-    });
-  }
-
-  function sortDishes() {
-    var mainList = document.querySelector('#main-list');
-    var dishes = Array.from(mainList.querySelectorAll('.w-dyn-item')).filter(function(dish) {
-      return dish.style.display !== 'none';
-    });
-
-    dishes.sort(function(a, b) {
-      var numA = parseInt(a.querySelector('.sorting-number').textContent, 10);
-      var numB = parseInt(b.querySelector('.sorting-number').textContent, 10);
-      return numA - numB;
-    });
-
-    dishes.forEach(function(dish) {
-      mainList.appendChild(dish);
-    });
-  }
+function togglePerPersonDivs(shouldShow) {
+  const perPersonDivs = document.querySelectorAll('.div-block-66');
+  perPersonDivs.forEach(function(div) {
+    div.style.display = shouldShow ? 'flex' : 'none';
+  });
+}
 
 function filterDishes(subCategoryText) {
     var mainHeading = document.getElementById('main-heading');
