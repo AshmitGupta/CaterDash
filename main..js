@@ -376,7 +376,7 @@ function updateButtonStyles(button, disabled) {
 var observer = new MutationObserver(function (mutationsList, observer) {
   for (var mutation of mutationsList) {
     if (mutation.type === 'childList' || mutation.type === 'characterData') {
-      var priceValue = parseFloat(mutation.target.textContent.replace(/\$\s*/, ''));
+      var priceValue = parseFloat(mutation.target.textContent.replace(/\$\s*/g, '').replace(/,/g, ''));
 
       // Determine the disabled state based on priceValue
       var disabled = !isNaN(priceValue) && priceValue < 300;
