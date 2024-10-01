@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
-  setTimeout(function () {
-    var mainHeading = document.getElementById('main-heading');
-    var mainHeadingText = mainHeading.textContent.trim();
+  // setTimeout(function () {
+  //   var mainHeading = document.getElementById('main-heading');
+  //   var mainHeadingText = mainHeading.textContent.trim();
   //   if (mainHeadingText === 'Sweet Obsession') {
   //     var firstSubLink = document.querySelector('#sub-link');
   //     if (firstSubLink) {
