@@ -1,16 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // setTimeout(function () {
-  //   var mainHeading = document.getElementById('main-heading');
-  //   var mainHeadingText = mainHeading.textContent.trim();
-  //   if (mainHeadingText === 'Sweet Obsession') {
-  //     var firstSubLink = document.querySelector('#sub-link');
-  //     if (firstSubLink) {
-  //       setTimeout(function () {
-  //         filterDishes(firstSubLink.textContent.trim());
-  //       }, 250);
-  //     }
-  //   }
-  // }, 0);
+  setTimeout(function () {
+    var mainHeading = document.getElementById('main-heading');
+    var mainHeadingText = mainHeading.textContent.trim();
+    if (mainHeadingText === 'Sweet Obsession') {
+      var firstSubLink = document.querySelector('#sub-link');
+      if (firstSubLink) {
+        setTimeout(function () {
+          filterDishes(firstSubLink.textContent.trim());
+        }, 250);
+      }
+    }
+  }, 0);
   setTimeout(function () {
     var priceElements = document.querySelectorAll('.prices-all');
 
