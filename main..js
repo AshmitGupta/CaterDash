@@ -114,6 +114,9 @@ document.addEventListener("DOMContentLoaded", function () {
         "Pastry Box": 12,
         "Food": 20,
         "Beverages": 12
+      },
+      "Holiday Menu": {
+        "Breakfast": 20
       }
     };
 
@@ -444,6 +447,9 @@ if (mainHeading) {
     toggleDisplay(true);
   } else if (mainHeadingText === 'Sweet Obsession') {
     updateContent('Sweet Obsession', 'Catering', 'Offering delicious and diverse catering with beverages, pastries, and cakes to elevate every occasion.');
+    toggleDisplay(true);
+  } else if (mainHeadingText === 'Holiday Menu') {
+    updateContent('Holiday Menu', 'Catering', 'Committed to creating exceptional and sustainably responsible experiences for you and your guests.');
     toggleDisplay(true);
   } else {
     toggleDisplay(false);
