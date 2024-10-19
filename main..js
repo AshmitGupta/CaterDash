@@ -583,5 +583,7 @@ document.querySelectorAll('.select-field.w-select').forEach(function(selectEleme
     }
 });
 
+document.getElementById('option-set-00d64130295fc1c628cb752167d8abc3').setAttribute('multiple', 'multiple');
+
 var config = { childList: true, subtree: true, characterData: true };
 observer.observe(targetNode, config);
