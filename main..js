@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (mainHeading && restaurantServingSizes[mainHeading.textContent]) {
           const servingSizes = restaurantServingSizes[mainHeading.textContent];
 
-          if (mainHeading.textContent === "Holiday Menu" && subCategoryText === "Breakfast") {
+          if (mainHeading.textContent === "Holiday Menu" && (subCategoryText === "Breakfast" || subCategoryText === "Plated")) {
             displayText = toTitleCase(subCategoryText);
             
             const leftBlocks = document.querySelectorAll('#left-block');
