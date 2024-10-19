@@ -125,18 +125,19 @@ document.addEventListener("DOMContentLoaded", function () {
       const suffixes = ['Platter', 'Tray', 'Trays', 'Platters', 'Cookies', 'Waffles'];
 
       if (mainHeading && restaurantServingSizes[mainHeading.textContent]) {
-        const servingSizes = restaurantServingSizes[mainHeading.textContent];
+          const servingSizes = restaurantServingSizes[mainHeading.textContent];
 
-      if (servingSizes[subCategoryText]) {
-          if (mainHeading.textContent === "Holiday Menu") {
+          if (mainHeading.textContent === "Holiday Menu" && subCategoryText === "Breakfast") {
             displayText = toTitleCase(subCategoryText);
             document.getElementById('left-block').style.display = 'none';
             document.getElementById('mid-block').style.display = 'none';
-          
             document.getElementById('right-block').textContent = 'Minimum 20 Guests';
-          } else {
-            displayText += ` (Serves ${servingSizes[subCategoryText]})`;
+            togglePerPersonDivs(true);
+            return;
           }
+
+       if (servingSizes[subCategoryText]) {
+          displayText += ` (Serves ${servingSizes[subCategoryText]})`;
           togglePerPersonDivs(true);
         } else if (suffixes.some(suffix => displayText.endsWith(suffix))) {
           const suffixServingSize = servingSizes.default[suffixes.find(suffix => displayText.endsWith(suffix))];
