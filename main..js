@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
   }, 0);
-
   setTimeout(function () {
     var priceElements = document.querySelectorAll('.prices-all');
 
@@ -22,7 +21,6 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("Updated text:", element.textContent);
     });
   }, 750);
-
   var cartItems = document.querySelectorAll('[id="cart-item"]');
   cartItems.forEach(function (cartItem) {
     cartItem.style.display = 'block';
@@ -50,7 +48,6 @@ document.addEventListener("DOMContentLoaded", function () {
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
   }
-
   function formatTextForComparison(text) {
     return text.toLowerCase().replace(/\s+/g, '-');
   }
@@ -90,8 +87,42 @@ document.addEventListener("DOMContentLoaded", function () {
   function filterDishes(subCategoryText) {
     var mainHeading = document.getElementById('main-heading');
     const formattedSubCategory = formatTextForComparison(subCategoryText);
+    const perPersonDiv = document.querySelectorAll('.div-block-66');
     const subHeading = document.getElementById('sub-heading');
-    const restaurantServingSizes = getRestaurantServingSizes();
+
+    const restaurantServingSizes = {
+      "Jo's Italian Deli": {
+        "Sides Platter": 8,
+        "Pasta Platter": 4,
+        "Sandwich Platter": 4,
+        "default": {
+          "Trays": 4,
+          "Waffles": 21,
+          "default": 20
+        }
+      },
+      "Mangia's Sandwiches": {
+        "Sides Platter": 10,
+        "Regular Sandwich Platter": 5,
+        "Large Sandwich Platter": 10
+      },
+      "Obanhmi": {
+        "Sides Box": 20,
+        "Banh Mi Box": 20
+      },
+      "Sweet Obsession": {
+        "Pastry Box": 12,
+        "Food": 20,
+        "Beverages": 12
+      },
+      "Holiday Menu": {
+        "Breakfast": 20,
+        "Plated": 20,
+        "Canapés (Cold)": 3,
+        "Canapés (Hot)": 3,
+        "Canapés (Sweet)": 3
+      }
+    };
 
     if (subCategoryText) {
       let displayText = toTitleCase(subCategoryText);
@@ -99,78 +130,124 @@ document.addEventListener("DOMContentLoaded", function () {
 
       if (mainHeading && restaurantServingSizes[mainHeading.textContent]) {
         const servingSizes = restaurantServingSizes[mainHeading.textContent];
+  
+        if (mainHeading.textContent === "Holiday Menu" && (subCategoryText === "Breakfast" || subCategoryText === "Plated")) {
+          displayText = toTitleCase(subCategoryText);
+          
+          const leftBlocks = document.querySelectorAll('#left-block');
+          const midBlocks = document.querySelectorAll('#mid-block');
+          const rightBlocks = document.querySelectorAll('#right-block');
+      
+          leftBlocks.forEach(function (element) {
+            element.style.display = 'none';
+          });
+          
+          midBlocks.forEach(function (element) {
+            element.style.display = 'none';
+          });
+          
+          rightBlocks.forEach(function (element) {
+            element.textContent = 'Minimum 20 Guests';
+          });
+      
+          togglePerPersonDivs(true);
+        }
+          
+        else if (mainHeading.textContent === "Holiday Menu" && 
+                 (subCategoryText === "Canapés (Cold)" || subCategoryText === "Canapés (Hot)" || subCategoryText === "Canapés (Sweet)")) {
+          
+          displayText = toTitleCase(subCategoryText);
+      
+          const leftBlocks = document.querySelectorAll('#left-block');
+          const midBlocks = document.querySelectorAll('#mid-block');
+          const rightBlocks = document.querySelectorAll('#right-block');
+      
+          leftBlocks.forEach(function (element) {
+            element.style.display = 'none';
+          });
+          
+          midBlocks.forEach(function (element) {
+            element.style.display = 'none';
+          });
+          rightBlocks.forEach(function (element) {
+            element.textContent = 'Minimum 3 Dozen';
+          });
+      
+          displayText += " (Per Dozen)";
+          togglePerPersonDivs(true);
+  
+          const textBlocks = document.querySelectorAll('.text-block-33');
+          const richTextBlocks = document.querySelectorAll('.rich-text-block');
+          
+          textBlocks.forEach(function (element) {
+            element.style.display = 'block';
+          });
+  
+          richTextBlocks.forEach(function (element) {
+            element.style.display = 'none';
+          });
+        }
+          
+        else if (mainHeading.textContent === "Holiday Menu") {
+  
+          const textBlocks = document.querySelectorAll('.text-block-33');
+          const richTextBlocks = document.querySelectorAll('.rich-text-block');
+  
+          textBlocks.forEach(function (element) {
+            element.style.display = 'none';
+          });
+  
+          richTextBlocks.forEach(function (element) {
+            element.style.display = 'block';
+          });
+        }
 
-        // Handle Holiday Menu specific cases
-        handleHolidayMenu(subCategoryText, mainHeading, displayText);
-
-        // Handle serving sizes for non-Holiday Menu items
-        if (mainHeading.textContent !== "Holiday Menu") {
-          handleServingSizes(subCategoryText, mainHeading, servingSizes, suffixes, displayText);
+       if (servingSizes[subCategoryText]) {
+          if (mainHeading.textContent !== "Holiday Menu") {
+            displayText += ` (Serves ${servingSizes[subCategoryText]})`;
+            togglePerPersonDivs(true);
+          }
+        } else if (suffixes.some(suffix => displayText.endsWith(suffix))) {
+          const suffixServingSize = servingSizes.default[suffixes.find(suffix => displayText.endsWith(suffix))];
+          displayText += ` (Serves ${suffixServingSize || servingSizes.default.default})`;
+          togglePerPersonDivs(true);
+        } else {
+          togglePerPersonDivs(false);
+        }
+      } else {
+        if (suffixes.some(suffix => displayText.endsWith(suffix))) {
+          if (displayText.endsWith('Trays')) {
+            displayText += ' (Serves 4)';
+          } else {
+            if (displayText.endsWith('Waffles')) {
+              displayText += ' (Serves 21)';
+            } else {
+              displayText += ' (Serves 20)';
+            }
+          }
+          togglePerPersonDivs(true);
+        } else {
+          togglePerPersonDivs(false);
         }
       }
 
       subHeading.textContent = displayText;
-      sortDishes();
-      filterVisibleDishes(formattedSubCategory);
-      updateSubLinksStyle();
     }
-  }
 
-  function handleHolidayMenu(subCategoryText, mainHeading, displayText) {
-    const leftBlocks = document.querySelectorAll('#left-block');
-    const midBlocks = document.querySelectorAll('#mid-block');
-    const rightBlocks = document.querySelectorAll('#right-block');
+    sortDishes();
 
-    if (mainHeading.textContent === "Holiday Menu") {
-      // Case for Breakfast, Plated, Reception Station
-      if (["Breakfast", "Plated", "Reception Station"].includes(subCategoryText)) {
-        updatePerPersonDisplay(leftBlocks, midBlocks, rightBlocks, "Minimum 20 Guests");
-      }
-      // Case for Canapés
-      else if (["Canapés (Cold)", "Canapés (Hot)", "Canapés (Sweet)"].includes(subCategoryText)) {
-        updatePerPersonDisplay(leftBlocks, midBlocks, rightBlocks, "Minimum 3 Dozen");
-        displayText += " (Per Dozen)";
-      }
-
-      toggleTextBlocks(subCategoryText);
-    }
-  }
-
-  function handleServingSizes(subCategoryText, mainHeading, servingSizes, suffixes, displayText) {
-    if (servingSizes[subCategoryText] && mainHeading.textContent !== "Holiday Menu") {
-      displayText += ` (Serves ${servingSizes[subCategoryText]})`;
-      togglePerPersonDivs(true);  // Show per person div
-    } else if (suffixes.some(suffix => displayText.endsWith(suffix))) {
-      const suffixServingSize = servingSizes.default[suffixes.find(suffix => displayText.endsWith(suffix))];
-      displayText += ` (Serves ${suffixServingSize || servingSizes.default.default})`;
-      togglePerPersonDivs(true);  // Show per person div
-    } else {
-      togglePerPersonDivs(false);
-    }
-  }
-
-  function updatePerPersonDisplay(leftBlocks, midBlocks, rightBlocks, rightBlockText) {
-    leftBlocks.forEach(element => element.style.display = 'none');
-    midBlocks.forEach(element => element.style.display = 'none');
-    rightBlocks.forEach(element => element.textContent = rightBlockText);
-    togglePerPersonDivs(true);
-  }
-
-  function togglePerPersonDivs(shouldShow) {
-    const perPersonDivs = document.querySelectorAll('.div-block-66');
-    perPersonDivs.forEach(function (div) {
-      div.style.display = shouldShow ? 'flex' : 'none';
-    });
-  }
-
-  function filterVisibleDishes(formattedSubCategory) {
     const dishes = document.querySelectorAll('#main-list .w-dyn-item');
     dishes.forEach(function (dish) {
       const dishSubCategory = formatTextForComparison(dish.querySelector('.sub-category').textContent.trim());
-      dish.style.display = dishSubCategory.includes(formattedSubCategory) ? 'block' : 'none';
+      if (dishSubCategory.includes(formattedSubCategory)) {
+        dish.style.display = 'block';
+      } else {
+        dish.style.display = 'none';
+      }
     });
+
+    updateSubLinksStyle();
   }
-});
 
   function setInitialDisplay() {
     const firstSubLink = document.querySelector('#sub-link');
