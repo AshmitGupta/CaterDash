@@ -129,11 +129,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
           if (mainHeading.textContent === "Holiday Menu" && subCategoryText === "Breakfast") {
             displayText = toTitleCase(subCategoryText);
-            document.getElementById('left-block').style.display = 'none';
-            document.getElementById('mid-block').style.display = 'none';
-            document.getElementById('right-block').textContent = 'Minimum 20 Guests';
+            
+            const leftBlocks = document.querySelectorAll('#left-block');
+            const midBlocks = document.querySelectorAll('#mid-block');
+            const rightBlocks = document.querySelectorAll('#right-block');
+        
+            leftBlocks.forEach(function (element) {
+              element.style.display = 'none';
+            });
+            
+            midBlocks.forEach(function (element) {
+              element.style.display = 'none';
+            });
+            
+            rightBlocks.forEach(function (element) {
+              element.textContent = 'Minimum 20 Guests';
+            });
+        
             togglePerPersonDivs(true);
-            return;
           }
 
        if (servingSizes[subCategoryText]) {
