@@ -116,7 +116,8 @@ document.addEventListener("DOMContentLoaded", function () {
         "Beverages": 12
       },
       "Holiday Menu": {
-        "Breakfast": 20
+        "Breakfast": 20,
+        "Plated": 20
       }
     };
 
