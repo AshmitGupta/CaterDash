@@ -190,7 +190,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
           
         if (mainHeading.textContent === "Holiday Menu" && 
-                 (subCategoryText !== "Canapés (Cold)" || subCategoryText !== "Canapés (Hot)" || subCategoryText !== "Canapés (Sweet)")) {
+                 (subCategoryText !== "Canapés (Cold)" && subCategoryText !== "Canapés (Hot)" && subCategoryText !== "Canapés (Sweet)")) {
   
           const textBlocks = document.querySelectorAll('.text-block-33');
           const richTextBlocks = document.querySelectorAll('.rich-text-block');
