@@ -151,8 +151,10 @@ document.addEventListener("DOMContentLoaded", function () {
           }
 
        if (servingSizes[subCategoryText]) {
-          displayText += ` (Serves ${servingSizes[subCategoryText]})`;
-          togglePerPersonDivs(true);
+          if (mainHeading.textContent !== "Holiday Menu") {
+            displayText += ` (Serves ${servingSizes[subCategoryText]})`;
+            togglePerPersonDivs(true);
+          }
         } else if (suffixes.some(suffix => displayText.endsWith(suffix))) {
           const suffixServingSize = servingSizes.default[suffixes.find(suffix => displayText.endsWith(suffix))];
           displayText += ` (Serves ${suffixServingSize || servingSizes.default.default})`;
