@@ -188,7 +188,8 @@ document.addEventListener("DOMContentLoaded", function () {
           });
         }
           
-        else if (mainHeading.textContent === "Holiday Menu") {
+        if (mainHeading.textContent === "Holiday Menu" && 
+                 (subCategoryText !== "Canapés (Cold)" || subCategoryText !== "Canapés (Hot)" || subCategoryText !== "Canapés (Sweet)")) {
   
           const textBlocks = document.querySelectorAll('.text-block-33');
           const richTextBlocks = document.querySelectorAll('.rich-text-block');
