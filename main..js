@@ -118,7 +118,9 @@ document.addEventListener("DOMContentLoaded", function () {
       "Holiday Menu": {
         "Breakfast": 20,
         "Plated": 20,
-        "Canapés (Cold)": 3
+        "Canapés (Cold)": 3,
+        "Canapés (Hot)": 3,
+        "Canapés (Sweet)": 3
       }
     };
 
