@@ -449,7 +449,7 @@ if (mainHeading) {
     updateContent('Sweet Obsession', 'Catering', 'Offering delicious and diverse catering with beverages, pastries, and cakes to elevate every occasion.');
     toggleDisplay(true);
   } else if (mainHeadingText === 'Holiday Menu') {
-    updateContent('Holiday Menu', 'Catering', 'Committed to creating exceptional and sustainably responsible experiences for you and your guests.');
+    updateContent('Holiday Menu', 'Nest Catering', 'Committed to creating exceptional and sustainably responsible experiences for you and your guests.');
     toggleDisplay(true);
   } else {
     toggleDisplay(false);
