@@ -127,8 +127,12 @@ document.addEventListener("DOMContentLoaded", function () {
       if (mainHeading && restaurantServingSizes[mainHeading.textContent]) {
         const servingSizes = restaurantServingSizes[mainHeading.textContent];
 
-        if (servingSizes[subCategoryText]) {
-          displayText += ` (Serves ${servingSizes[subCategoryText]})`;
+      if (servingSizes[subCategoryText]) {
+          if (mainHeading.textContent === "Holiday Menu") {
+            displayText = toTitleCase(subCategoryText);
+          } else {
+            displayText += ` (Serves ${servingSizes[subCategoryText]})`;
+          }
           togglePerPersonDivs(true);
         } else if (suffixes.some(suffix => displayText.endsWith(suffix))) {
           const suffixServingSize = servingSizes.default[suffixes.find(suffix => displayText.endsWith(suffix))];
