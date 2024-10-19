@@ -570,5 +570,7 @@ if (headingText.trim() === "Club Kitchen") {
   clubDiv.style.display = "none";
 }
 
+document.querySelector('#option-set-00d64130295fc1c628cb752167d8abc3 option[selected]').textContent = 'Choose one';
+
 var config = { childList: true, subtree: true, characterData: true };
 observer.observe(targetNode, config);
