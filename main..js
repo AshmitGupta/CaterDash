@@ -87,9 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function filterDishes(subCategoryText) {
   var mainHeading = document.getElementById('main-heading');
   const formattedSubCategory = formatTextForComparison(subCategoryText);
-  const perPersonDiv = document.querySelectorAll('.div-block-66');
   const subHeading = document.getElementById('sub-heading');
-
   const restaurantServingSizes = getRestaurantServingSizes();
 
   if (subCategoryText) {
@@ -103,7 +101,9 @@ function filterDishes(subCategoryText) {
       handleHolidayMenu(subCategoryText, mainHeading, displayText);
 
       // Handle serving sizes for non-Holiday Menu items
-      handleServingSizes(subCategoryText, mainHeading, servingSizes, suffixes, displayText);
+      if (mainHeading.textContent !== "Holiday Menu") {
+        handleServingSizes(subCategoryText, mainHeading, servingSizes, suffixes, displayText);
+      }
     }
 
     subHeading.textContent = displayText;
@@ -111,43 +111,6 @@ function filterDishes(subCategoryText) {
     filterVisibleDishes(formattedSubCategory);
     updateSubLinksStyle();
   }
-}
-
-function getRestaurantServingSizes() {
-  return {
-    "Jo's Italian Deli": {
-      "Sides Platter": 8,
-      "Pasta Platter": 4,
-      "Sandwich Platter": 4,
-      "default": {
-        "Trays": 4,
-        "Waffles": 21,
-        "default": 20
-      }
-    },
-    "Mangia's Sandwiches": {
-      "Sides Platter": 10,
-      "Regular Sandwich Platter": 5,
-      "Large Sandwich Platter": 10
-    },
-    "Obanhmi": {
-      "Sides Box": 20,
-      "Banh Mi Box": 20
-    },
-    "Sweet Obsession": {
-      "Pastry Box": 12,
-      "Food": 20,
-      "Beverages": 12
-    },
-    "Holiday Menu": {
-      "Breakfast": 20,
-      "Plated": 20,
-      "Canapés (Cold)": 3,
-      "Canapés (Hot)": 3,
-      "Canapés (Sweet)": 3,
-      "Reception Station": 20
-    }
-  };
 }
 
 function handleHolidayMenu(subCategoryText, mainHeading, displayText) {
@@ -170,44 +133,31 @@ function handleHolidayMenu(subCategoryText, mainHeading, displayText) {
   }
 }
 
-function updatePerPersonDisplay(leftBlocks, midBlocks, rightBlocks, rightBlockText) {
-  leftBlocks.forEach(element => element.style.display = 'none');
-  midBlocks.forEach(element => element.style.display = 'none');
-  rightBlocks.forEach(element => element.textContent = rightBlockText);
-  togglePerPersonDivs(true);
-}
-
-function toggleTextBlocks(subCategoryText) {
-  const textBlocks = document.querySelectorAll('.text-block-33');
-  const richTextBlocks = document.querySelectorAll('.rich-text-block');
-
-  // Show text-block-33 for Canapés and hide rich-text-block
-  if (["Canapés (Cold)", "Canapés (Hot)", "Canapés (Sweet)"].includes(subCategoryText)) {
-    toggleBlockDisplay(textBlocks, 'block');
-    toggleBlockDisplay(richTextBlocks, 'none');
-  }
-  // Show rich-text-block for other Holiday Menu items
-  else {
-    toggleBlockDisplay(textBlocks, 'none');
-    toggleBlockDisplay(richTextBlocks, 'block');
-  }
-}
-
-function toggleBlockDisplay(blocks, displayStyle) {
-  blocks.forEach(element => element.style.display = displayStyle);
-}
-
 function handleServingSizes(subCategoryText, mainHeading, servingSizes, suffixes, displayText) {
   if (servingSizes[subCategoryText] && mainHeading.textContent !== "Holiday Menu") {
     displayText += ` (Serves ${servingSizes[subCategoryText]})`;
-    togglePerPersonDivs(true);
+    togglePerPersonDivs(true);  // Show per person div
   } else if (suffixes.some(suffix => displayText.endsWith(suffix))) {
     const suffixServingSize = servingSizes.default[suffixes.find(suffix => displayText.endsWith(suffix))];
     displayText += ` (Serves ${suffixServingSize || servingSizes.default.default})`;
-    togglePerPersonDivs(true);
+    togglePerPersonDivs(true);  // Show per person div
   } else {
     togglePerPersonDivs(false);
   }
+}
+
+function updatePerPersonDisplay(leftBlocks, midBlocks, rightBlocks, rightBlockText) {
+  leftBlocks.forEach(element => element.style.display = 'none');
+  midBlocks.forEach(element => element.style.display = 'none');
+  rightBlocks.forEach(element.textContent = rightBlockText);
+  togglePerPersonDivs(true);
+}
+
+function togglePerPersonDivs(shouldShow) {
+  const perPersonDivs = document.querySelectorAll('.div-block-66');
+  perPersonDivs.forEach(function (div) {
+    div.style.display = shouldShow ? 'flex' : 'none';
+  });
 }
 
 function filterVisibleDishes(formattedSubCategory) {
