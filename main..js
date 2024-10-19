@@ -153,6 +153,30 @@ document.addEventListener("DOMContentLoaded", function () {
             togglePerPersonDivs(true);
           }
 
+      else if (mainHeading.textContent === "Holiday Menu" && 
+                (subCategoryText === "Canapés (Cold)" || subCategoryText === "Canapés (Hot)" || subCategoryText === "Canapés (Sweet)")) {
+          
+          displayText = toTitleCase(subCategoryText);
+      
+          const leftBlocks = document.querySelectorAll('#left-block');
+          const midBlocks = document.querySelectorAll('#mid-block');
+          const rightBlocks = document.querySelectorAll('#right-block');
+      
+          leftBlocks.forEach(function (element) {
+            element.style.display = 'none';
+          });
+          
+          midBlocks.forEach(function (element) {
+            element.style.display = 'none';
+          });
+          rightBlocks.forEach(function (element) {
+            element.textContent = 'Minimum 3 Dozen';
+          });
+      
+          displayText += " (Per Dozen)";
+          togglePerPersonDivs(true);
+        }
+
        if (servingSizes[subCategoryText]) {
           if (mainHeading.textContent !== "Holiday Menu") {
             displayText += ` (Serves ${servingSizes[subCategoryText]})`;
