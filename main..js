@@ -177,6 +177,18 @@ document.addEventListener("DOMContentLoaded", function () {
           togglePerPersonDivs(true);
         }
 
+        if (mainHeading.textContent === "Holiday Menu") {
+          const textBlocks = document.querySelectorAll('.text-block-33');
+          textBlocks.forEach(function (element) {
+            element.style.display = 'none';
+          });
+          
+          const richTextBlocks = document.querySelectorAll('.rich-text-block');
+          richTextBlocks.forEach(function (element) {
+            element.style.display = 'block'; // or 'flex' depending on your styling
+          });
+        }
+
        if (servingSizes[subCategoryText]) {
           if (mainHeading.textContent !== "Holiday Menu") {
             displayText += ` (Serves ${servingSizes[subCategoryText]})`;
