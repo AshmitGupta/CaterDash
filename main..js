@@ -130,6 +130,10 @@ document.addEventListener("DOMContentLoaded", function () {
       if (servingSizes[subCategoryText]) {
           if (mainHeading.textContent === "Holiday Menu") {
             displayText = toTitleCase(subCategoryText);
+            document.getElementById('left-block').style.display = 'none';
+            document.getElementById('mid-block').style.display = 'none';
+          
+            document.getElementById('right-block').textContent = 'Minimum 20 Guests';
           } else {
             displayText += ` (Serves ${servingSizes[subCategoryText]})`;
           }
