@@ -402,6 +402,11 @@ function updateContent(mainHeadingText, headingText, descriptionText) {
   if (topHeading) {
     topHeading.textContent = headingText;
   }
+  
+  if (topHeading2) {
+    topHeading2.textContent = headingText;
+  }
+  
   if (topDescription) {
     topDescription.textContent = descriptionText;
   }
