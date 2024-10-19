@@ -576,7 +576,12 @@ if (headingText.trim() === "Club Kitchen") {
   clubDiv.style.display = "none";
 }
 
-document.querySelector('#option-set-00d64130295fc1c628cb752167d8abc3 option[selected]').textContent = 'Choose one';
+document.querySelectorAll('.select-field.w-select').forEach(function(selectElement) {
+    const selectedOption = selectElement.querySelector('option[selected]');
+    if (selectedOption) {
+        selectedOption.textContent = 'Choose one';
+    }
+});
 
 var config = { childList: true, subtree: true, characterData: true };
 observer.observe(targetNode, config);
