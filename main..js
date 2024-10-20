@@ -543,6 +543,36 @@ if (mainHeading) {
   }
 }
 
+const quantityInputs = document.querySelectorAll('[name="commerce-add-to-cart-quantity-input"]');
+
+console.log("Found quantity inputs:", quantityInputs.length);
+
+quantityInputs.forEach(function (input) {
+  const category = document.querySelector('#sub-heading').textContent.trim();
+
+  console.log("Current category:", category);
+
+  if (category.includes("Breakfast") || category.includes("Plated") || category.includes("Buffet")) {
+    input.setAttribute('min', '20');
+    console.log("Setting min to 20 for Breakfast, Plated, or Buffet");
+  } else if (category.includes("Canapes Hot") || category.includes("Canapes Cold") || category.includes("Canapes Sweet")) {
+    input.setAttribute('min', '3');
+    console.log("Setting min to 3 for Canapes (Hot, Cold, or Sweet)");
+  } else if (category.includes("Reception Station") && !category.includes("Chef Attended")) {
+    input.setAttribute('min', '20');
+    console.log("Setting min to 20 for Reception Station (Non-Chef Attended)");
+  } else if (category.includes("Sushi")) {
+    input.setAttribute('min', '1');
+    console.log("Setting min to 1 for Sushi");
+  } else if (category.includes("Chef Attended Reception Station")) {
+    input.setAttribute('min', '20');
+    console.log("Setting min to 20 for Chef Attended Reception Station");
+  } else {
+    console.log("No matching category found, no min value set.");
+  }
+  console.log("Final min value for this input:", input.getAttribute('min'));
+});
+
 var itemsRestaurant1 = [
   "Small Platter",
   "Medium Platter",
@@ -668,25 +698,6 @@ document.querySelectorAll('.select-field.w-select').forEach(function(selectEleme
     if (selectedOption) {
         selectedOption.textContent = 'Choose one';
     }
-});
-
-const quantityInputs = document.querySelectorAll('[name="commerce-add-to-cart-quantity-input"]');
-
-quantityInputs.forEach(function (input) {
-  const category = document.querySelector('#sub-heading').textContent.trim();
-
-  // Set the min value based on the category from the sub-heading
-  if (category.includes("Breakfast") || category.includes("Plated") || category.includes("Buffet")) {
-    input.setAttribute('min', '20');
-  } else if (category.includes("Canapes Hot") || category.includes("Canapes Cold") || category.includes("Canapes Sweet")) {
-    input.setAttribute('min', '3');
-  } else if (category.includes("Reception Station") && !category.includes("Chef Attended")) {
-    input.setAttribute('min', '20');
-  } else if (category.includes("Sushi")) {
-    input.setAttribute('min', '1');
-  } else if (category.includes("Chef Attended Reception Station")) {
-    input.setAttribute('min', '20');
-  }
 });
 
 var config = { childList: true, subtree: true, characterData: true };
