@@ -675,9 +675,18 @@ observer.observe(targetNode, config);
 
 
 document.addEventListener("DOMContentLoaded", function () {
-  function updateMinValues() {
-    const quantityInputs = document.querySelectorAll('[name="commerce-add-to-cart-quantity-input"]');
-    const category = document.querySelector('#sub-heading').textContent.trim();
+  
+    const quantityInputs = document.querySelectorAll('input[name="quantity"]');
+  
+    quantityInputs.forEach(function (input) {
+      input.disabled = true; // Disable each input field
+    });
+  
+    console.log(`Disabled ${quantityInputs.length} quantity input fields.`);
+    
+    function updateMinValues() {
+      const quantityInputs = document.querySelectorAll('[name="commerce-add-to-cart-quantity-input"]');
+      const category = document.querySelector('#sub-heading').textContent.trim();
 
     quantityInputs.forEach(function (input) {
       let minValue = '';
