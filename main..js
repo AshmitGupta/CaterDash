@@ -679,39 +679,36 @@ document.addEventListener("DOMContentLoaded", function () {
     const quantityInputs = document.querySelectorAll('[name="commerce-add-to-cart-quantity-input"]');
     const category = document.querySelector('#sub-heading').textContent.trim();
 
-    console.log("Current category:", category);
-
     quantityInputs.forEach(function (input) {
+      let minValue = '';
+
       if (category.includes("Breakfast") || category.includes("Plated") || category.includes("Buffet")) {
-        input.setAttribute('min', '20');
-        console.log("Setting min to 20 for Breakfast, Plated, or Buffet");
+        minValue = '20';
       } else if (category.includes("Canapés (Cold) (Per Dozen)") || category.includes("Canapés (Hot) (Per Dozen)") || category.includes("Canapés (Sweet) (Per Dozen)")) {
-        input.setAttribute('min', '3');
-        console.log("Setting min to 3 for Canapes (Hot, Cold, or Sweet)");
+        minValue = '3';
       } else if (category.includes("Reception Station") && !category.includes("Chef Attended")) {
-        input.setAttribute('min', '20');
-        console.log("Setting min to 20 for Reception Station (Non-Chef Attended)");
+        minValue = '20';
       } else if (category.includes("Sushi")) {
-        input.setAttribute('min', '1');
-        console.log("Setting min to 1 for Sushi");
+        minValue = '1';
       } else if (category.includes("Chef Attended Reception Station")) {
-        input.setAttribute('min', '20');
-        console.log("Setting min to 20 for Chef Attended Reception Station");
-      } else {
-        console.log("No matching category found, no min value set.");
+        minValue = '20';
       }
-      console.log("Final min value for this input:", input.getAttribute('min'));
+
+      if (minValue) {
+        input.setAttribute('min', minValue);
+        input.value = minValue;
+      }
     });
   }
 
   const subHeadingObserver = new MutationObserver(function (mutations) {
     mutations.forEach(function (mutation) {
       if (mutation.type === 'characterData' || mutation.type === 'childList') {
-        console.log("Sub-heading changed, updating min values.");
         updateMinValues();
       }
     });
   });
+
   const subHeading = document.getElementById('sub-heading');
   if (subHeading) {
     subHeadingObserver.observe(subHeading, {
@@ -719,10 +716,6 @@ document.addEventListener("DOMContentLoaded", function () {
       childList: true,
       subtree: true
     });
-
-    console.log("MutationObserver set on sub-heading.");
-  } else {
-    console.error("Sub-heading element not found.");
   }
 
   updateMinValues();
