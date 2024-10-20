@@ -543,36 +543,6 @@ if (mainHeading) {
   }
 }
 
-const quantityInputs = document.querySelectorAll('[name="commerce-add-to-cart-quantity-input"]');
-
-console.log("Found quantity inputs:", quantityInputs.length);
-
-quantityInputs.forEach(function (input) {
-  const category = document.querySelector('#sub-heading').textContent.trim();
-
-  console.log("Current category:", category);
-
-  if (category.includes("Breakfast") || category.includes("Plated") || category.includes("Buffet")) {
-    input.setAttribute('min', '20');
-    console.log("Setting min to 20 for Breakfast, Plated, or Buffet");
-  } else if (category.includes("Canapes Hot") || category.includes("Canapes Cold") || category.includes("Canapes Sweet")) {
-    input.setAttribute('min', '3');
-    console.log("Setting min to 3 for Canapes (Hot, Cold, or Sweet)");
-  } else if (category.includes("Reception Station") && !category.includes("Chef Attended")) {
-    input.setAttribute('min', '20');
-    console.log("Setting min to 20 for Reception Station (Non-Chef Attended)");
-  } else if (category.includes("Sushi")) {
-    input.setAttribute('min', '1');
-    console.log("Setting min to 1 for Sushi");
-  } else if (category.includes("Chef Attended Reception Station")) {
-    input.setAttribute('min', '20');
-    console.log("Setting min to 20 for Chef Attended Reception Station");
-  } else {
-    console.log("No matching category found, no min value set.");
-  }
-  console.log("Final min value for this input:", input.getAttribute('min'));
-});
-
 var itemsRestaurant1 = [
   "Small Platter",
   "Medium Platter",
@@ -702,3 +672,66 @@ document.querySelectorAll('.select-field.w-select').forEach(function(selectEleme
 
 var config = { childList: true, subtree: true, characterData: true };
 observer.observe(targetNode, config);
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Function to update min values based on the category
+  function updateMinValues() {
+    const quantityInputs = document.querySelectorAll('[name="commerce-add-to-cart-quantity-input"]');
+    const category = document.querySelector('#sub-heading').textContent.trim();
+
+    console.log("Current category:", category);
+
+    quantityInputs.forEach(function (input) {
+      // Set the min value based on the category from the sub-heading and log the action
+      if (category.includes("Breakfast") || category.includes("Plated") || category.includes("Buffet")) {
+        input.setAttribute('min', '20');
+        console.log("Setting min to 20 for Breakfast, Plated, or Buffet");
+      } else if (category.includes("Canapes Hot") || category.includes("Canapes Cold") || category.includes("Canapes Sweet")) {
+        input.setAttribute('min', '3');
+        console.log("Setting min to 3 for Canapes (Hot, Cold, or Sweet)");
+      } else if (category.includes("Reception Station") && !category.includes("Chef Attended")) {
+        input.setAttribute('min', '20');
+        console.log("Setting min to 20 for Reception Station (Non-Chef Attended)");
+      } else if (category.includes("Sushi")) {
+        input.setAttribute('min', '1');
+        console.log("Setting min to 1 for Sushi");
+      } else if (category.includes("Chef Attended Reception Station")) {
+        input.setAttribute('min', '20');
+        console.log("Setting min to 20 for Chef Attended Reception Station");
+      } else {
+        console.log("No matching category found, no min value set.");
+      }
+
+      // Log the final value of min for each input
+      console.log("Final min value for this input:", input.getAttribute('min'));
+    });
+  }
+
+  // Initialize the MutationObserver to observe changes in the #sub-heading element
+  const subHeadingObserver = new MutationObserver(function (mutations) {
+    mutations.forEach(function (mutation) {
+      if (mutation.type === 'characterData' || mutation.type === 'childList') {
+        console.log("Sub-heading changed, updating min values.");
+        updateMinValues(); // Call the function to update min values when sub-heading changes
+      }
+    });
+  });
+
+  // Get the sub-heading element and start observing it
+  const subHeading = document.getElementById('sub-heading');
+  if (subHeading) {
+    subHeadingObserver.observe(subHeading, {
+      characterData: true, // Watch for changes in the text content
+      childList: true,     // Watch for changes in the child elements
+      subtree: true        // Observe any changes inside the subtree
+    });
+
+    console.log("MutationObserver set on sub-heading.");
+  } else {
+    console.error("Sub-heading element not found.");
+  }
+
+  // Initial min value update when the page loads
+  updateMinValues();
+});
