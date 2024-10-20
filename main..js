@@ -670,5 +670,24 @@ document.querySelectorAll('.select-field.w-select').forEach(function(selectEleme
     }
 });
 
+const quantityInputs = document.querySelectorAll('[name="commerce-add-to-cart-quantity-input"]');
+
+quantityInputs.forEach(function (input) {
+  const category = document.querySelector('#sub-heading').textContent.trim();
+
+  // Set the min value based on the category from the sub-heading
+  if (category.includes("Breakfast") || category.includes("Plated") || category.includes("Buffet")) {
+    input.setAttribute('min', '20');
+  } else if (category.includes("Canapes Hot") || category.includes("Canapes Cold") || category.includes("Canapes Sweet")) {
+    input.setAttribute('min', '3');
+  } else if (category.includes("Reception Station") && !category.includes("Chef Attended")) {
+    input.setAttribute('min', '20');
+  } else if (category.includes("Sushi")) {
+    input.setAttribute('min', '1');
+  } else if (category.includes("Chef Attended Reception Station")) {
+    input.setAttribute('min', '20');
+  }
+});
+
 var config = { childList: true, subtree: true, characterData: true };
 observer.observe(targetNode, config);
