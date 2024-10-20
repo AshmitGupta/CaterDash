@@ -121,7 +121,8 @@ document.addEventListener("DOMContentLoaded", function () {
         "Canapés (Cold)": 3,
         "Canapés (Hot)": 3,
         "Canapés (Sweet)": 3,
-        "Reception Station": 20
+        "Reception Station": 20,
+        "Buffet": 20
       }
     };
 
@@ -132,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (mainHeading && restaurantServingSizes[mainHeading.textContent]) {
         const servingSizes = restaurantServingSizes[mainHeading.textContent];
   
-        if (mainHeading.textContent === "Holiday Menu" && (subCategoryText === "Breakfast" || subCategoryText === "Plated" || subCategoryText === "Reception Station")) {
+        if (mainHeading.textContent === "Holiday Menu" && (subCategoryText === "Breakfast" || subCategoryText === "Plated" || subCategoryText === "Reception Station" || subCategoryText === "Buffet")) {
           displayText = toTitleCase(subCategoryText);
           
           const leftBlocks = document.querySelectorAll('#left-block');
