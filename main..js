@@ -675,7 +675,6 @@ observer.observe(targetNode, config);
 
 
 document.addEventListener("DOMContentLoaded", function () {
-  // Function to update min values based on the category
   function updateMinValues() {
     const quantityInputs = document.querySelectorAll('[name="commerce-add-to-cart-quantity-input"]');
     const category = document.querySelector('#sub-heading').textContent.trim();
@@ -683,11 +682,10 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("Current category:", category);
 
     quantityInputs.forEach(function (input) {
-      // Set the min value based on the category from the sub-heading and log the action
       if (category.includes("Breakfast") || category.includes("Plated") || category.includes("Buffet")) {
         input.setAttribute('min', '20');
         console.log("Setting min to 20 for Breakfast, Plated, or Buffet");
-      } else if (category.includes("Canapes Hot") || category.includes("Canapes Cold") || category.includes("Canapes Sweet")) {
+      } else if (category.includes("Canapés (Cold) (Per Dozen)") || category.includes("Canapés (Hot) (Per Dozen)") || category.includes("Canapés (Sweet) (Per Dozen)")) {
         input.setAttribute('min', '3');
         console.log("Setting min to 3 for Canapes (Hot, Cold, or Sweet)");
       } else if (category.includes("Reception Station") && !category.includes("Chef Attended")) {
@@ -702,29 +700,24 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         console.log("No matching category found, no min value set.");
       }
-
-      // Log the final value of min for each input
       console.log("Final min value for this input:", input.getAttribute('min'));
     });
   }
 
-  // Initialize the MutationObserver to observe changes in the #sub-heading element
   const subHeadingObserver = new MutationObserver(function (mutations) {
     mutations.forEach(function (mutation) {
       if (mutation.type === 'characterData' || mutation.type === 'childList') {
         console.log("Sub-heading changed, updating min values.");
-        updateMinValues(); // Call the function to update min values when sub-heading changes
+        updateMinValues();
       }
     });
   });
-
-  // Get the sub-heading element and start observing it
   const subHeading = document.getElementById('sub-heading');
   if (subHeading) {
     subHeadingObserver.observe(subHeading, {
-      characterData: true, // Watch for changes in the text content
-      childList: true,     // Watch for changes in the child elements
-      subtree: true        // Observe any changes inside the subtree
+      characterData: true,
+      childList: true,
+      subtree: true
     });
 
     console.log("MutationObserver set on sub-heading.");
@@ -732,6 +725,5 @@ document.addEventListener("DOMContentLoaded", function () {
     console.error("Sub-heading element not found.");
   }
 
-  // Initial min value update when the page loads
   updateMinValues();
 });
