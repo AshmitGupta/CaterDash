@@ -121,9 +121,9 @@ document.addEventListener("DOMContentLoaded", function () {
         "Canapés (Cold)": 3,
         "Canapés (Hot)": 3,
         "Canapés (Sweet)": 3,
-        "Reception Station": 20,
+        "Reception Stations": 20,
         "Buffet": 20,
-        "Chef Attended Reception Stations": 20
+        "Chef Attended Reception Station": 20
       }
     };
 
@@ -134,8 +134,8 @@ document.addEventListener("DOMContentLoaded", function () {
       if (mainHeading && restaurantServingSizes[mainHeading.textContent]) {
         const servingSizes = restaurantServingSizes[mainHeading.textContent];
   
-        if (mainHeading.textContent === "Holiday Menu" && (subCategoryText === "Breakfast" || subCategoryText === "Plated" || subCategoryText === "Reception Station" || subCategoryText === "Buffet" 
-                                                           || subCategoryText === "Chef Attended Reception Stations")) {
+        if (mainHeading.textContent === "Holiday Menu" && (subCategoryText === "Breakfast" || subCategoryText === "Plated" || subCategoryText === "Reception Stations" || subCategoryText === "Buffet" 
+                                                           || subCategoryText === "Chef Attended Reception Station")) {
           displayText = toTitleCase(subCategoryText);
           
           const leftBlocks = document.querySelectorAll('#left-block');
@@ -687,7 +687,7 @@ document.addEventListener("DOMContentLoaded", function () {
         minValue = '20';
       } else if (category.includes("Canapés (Cold) (Per Dozen)") || category.includes("Canapés (Hot) (Per Dozen)") || category.includes("Canapés (Sweet) (Per Dozen)")) {
         minValue = '3';
-      } else if (category.includes("Reception Station") && !category.includes("Chef Attended")) {
+      } else if (category.includes("Reception Stations") && !category.includes("Chef Attended")) {
         minValue = '20';
       } else if (category.includes("Sushi")) {
         minValue = '1';
@@ -700,7 +700,7 @@ document.addEventListener("DOMContentLoaded", function () {
         input.value = minValue;
       }
 
-      if (category.includes("Reception Stations") || category.includes("Sushi")) {
+      if (category.includes("Sushi")) {
         const richTextBlocks = document.querySelectorAll('.rich-text-block');
       
         richTextBlocks.forEach(function (element) {
