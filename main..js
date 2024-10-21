@@ -675,14 +675,6 @@ observer.observe(targetNode, config);
 
 
 document.addEventListener("DOMContentLoaded", function () {
-  
-  const quantityInputs = document.querySelectorAll('.cart-quantity-2');
-
-  quantityInputs.forEach(function (input) {
-    input.disabled = true;
-  });
-
-  console.log(`Disabled ${quantityInputs.length} quantity input fields.`);
     
     function updateMinValues() {
       const quantityInputs = document.querySelectorAll('[name="commerce-add-to-cart-quantity-input"]');
@@ -728,4 +720,28 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   updateMinValues();
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  function disableCartQuantityInputs() {
+    const quantityInputs = document.querySelectorAll('.cart-quantity-2');
+    quantityInputs.forEach(function (input) {
+      input.disabled = true; // Disable each input field
+    });
+    console.log(`Disabled ${quantityInputs.length} quantity input fields.`);
+  }
+  const observer = new MutationObserver(function (mutations) {
+    mutations.forEach(function (mutation) {
+      if (mutation.type === 'childList' || mutation.type === 'subtree') {
+        disableCartQuantityInputs();
+      }
+    });
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+
+  disableCartQuantityInputs();
 });
