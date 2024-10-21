@@ -52,21 +52,36 @@ document.addEventListener("DOMContentLoaded", function () {
     return text.toLowerCase().replace(/\s+/g, '-');
   }
 
-  function updateSubLinksStyle() {
-    const subHeadingText = document.getElementById('sub-heading').textContent.trim();
-    const subLinks = document.querySelectorAll('#sub-list .sub-links-text');
-    let textForComparison = subHeadingText.split(' (')[0]; // Extract text before any bracket ' ('
+function updateSubLinksStyle() {
+  const subHeadingText = document.getElementById('sub-heading').textContent.trim();
+  const subLinks = document.querySelectorAll('#sub-list .sub-links-text');
+  
+  let textForComparison;
 
-    subLinks.forEach((link) => {
-      if (link.textContent.trim() === textForComparison) {
-        link.style.color = '#eb2b34';
-        link.style.fontWeight = 'bold';
-      } else {
-        link.style.color = ''; // Reset to original color if not default
-        link.style.fontWeight = ''; // Reset to original font weight if not default
-      }
-    });
+  const matches = subHeadingText.match(/([^(]+)\s*(\([^)]+\))?\s*(\([^)]+\))?/);
+
+  if (matches) {
+    if (matches[3]) {
+      textForComparison = matches[1].trim() + ' ' + matches[2].trim();
+    } else if (matches[2]) {
+      textForComparison = matches[1].trim();
+    } else {
+      textForComparison = subHeadingText;
+    }
+  } else {
+    textForComparison = subHeadingText;
   }
+
+  subLinks.forEach((link) => {
+    if (link.textContent.trim() === textForComparison) {
+      link.style.color = '#eb2b34';
+      link.style.fontWeight = 'bold';
+    } else {
+      link.style.color = '';
+      link.style.fontWeight = '';
+    }
+  });
+}
 
   const subHeadingObserver = new MutationObserver(updateSubLinksStyle);
   const subHeading = document.getElementById('sub-heading');
