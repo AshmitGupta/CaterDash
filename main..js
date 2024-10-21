@@ -699,6 +699,17 @@ document.addEventListener("DOMContentLoaded", function () {
         input.setAttribute('min', minValue);
         input.value = minValue;
       }
+
+      if (category.includes("Reception Stations") || category.includes("Sushi")) {
+        const richTextBlocks = document.querySelectorAll('.rich-text-block');
+      
+        richTextBlocks.forEach(function (element) {
+          element.style.marginTop = '20px';
+        });
+      
+        console.log(`Added top margin to ${richTextBlocks.length} elements with class 'rich-text-block'.`);
+      }
+      
     });
   }
 
