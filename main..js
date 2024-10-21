@@ -699,17 +699,6 @@ document.addEventListener("DOMContentLoaded", function () {
         input.setAttribute('min', minValue);
         input.value = minValue;
       }
-
-      if (category.includes("Sushi")) {
-        const richTextBlocks = document.querySelectorAll('.rich-text-block');
-      
-        richTextBlocks.forEach(function (element) {
-          element.style.marginTop = '20px';
-        });
-      
-        console.log(`Added top margin to ${richTextBlocks.length} elements with class 'rich-text-block'.`);
-      }
-      
     });
   }
 
@@ -755,4 +744,47 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   disableCartQuantityInputs();
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  function updateMarginBasedOnCategory() {
+    const category = document.querySelector('#sub-heading').textContent.trim();
+    const richTextBlocks = document.querySelectorAll('.rich-text-block');
+
+    if (category.includes("Sushi") || category.includes("Reception Stations")) {
+      richTextBlocks.forEach(function (element) {
+        element.style.marginTop = '20px';
+      });
+      console.log(`Added top margin to ${richTextBlocks.length} elements with class 'rich-text-block'.`);
+    } else {
+      richTextBlocks.forEach(function (element) {
+        element.style.marginTop = '';
+      });
+      console.log(`Removed top margin from ${richTextBlocks.length} elements with class 'rich-text-block'.`);
+    }
+  }
+
+  const subHeadingObserver = new MutationObserver(function (mutations) {
+    mutations.forEach(function (mutation) {
+      if (mutation.type === 'characterData' || mutation.type === 'childList') {
+        console.log("Sub-heading changed, updating margins.");
+        updateMarginBasedOnCategory();
+      }
+    });
+  });
+
+  const subHeading = document.getElementById('sub-heading');
+  if (subHeading) {
+    subHeadingObserver.observe(subHeading, {
+      characterData: true,
+      childList: true,
+      subtree: true
+    });
+
+    console.log("MutationObserver set on sub-heading.");
+  } else {
+    console.error("Sub-heading element not found.");
+  }
+
+  updateMarginBasedOnCategory();
 });
