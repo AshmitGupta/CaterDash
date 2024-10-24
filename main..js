@@ -694,8 +694,10 @@ document.addEventListener("DOMContentLoaded", function () {
     function updateMinValues() {
       const quantityInputs = document.querySelectorAll('[name="commerce-add-to-cart-quantity-input"]');
       const category = document.querySelector('#sub-heading').textContent.trim();
+      
+      const filteredInputs = Array.from(quantityInputs).filter(input => !input.classList.contains('quantity-2'));
 
-    quantityInputs.forEach(function (input) {
+    filteredInputs.forEach(function (input) {
       let minValue = '';
 
       if (category.includes("Breakfast") || category.includes("Plated") || category.includes("Buffet")) {
