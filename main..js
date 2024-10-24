@@ -803,3 +803,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
   updateMarginBasedOnCategory();
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  var priceElements = document.querySelectorAll('.prices-all');
+
+  function updatePrices() {
+    priceElements.forEach(function (element) {
+      console.log("Original text:", element.textContent);
+      var updatedText = element.textContent.replace(/\$\s*/g, '$');
+      element.textContent = updatedText;
+      console.log("Updated text:", element.textContent);
+    });
+  }
+
+  var observer = new MutationObserver(function (mutations) {
+    mutations.forEach(function (mutation) {
+      if (mutation.type === 'childList' || mutation.type === 'characterData') {
+        updatePrices();
+      }
+    });
+  });
+
+  priceElements.forEach(function (element) {
+    observer.observe(element, {
+      childList: true,
+      characterData: true,
+      subtree: true
+    });
+  });
+
+  updatePrices();
+});
+
