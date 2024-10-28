@@ -139,6 +139,10 @@ function updateSubLinksStyle() {
         "Reception Stations": 20,
         "Buffet": 20,
         "Chef Attended Reception Station": 20
+      },
+      "Baked Goods & Coffee": {
+        "Baked Goods Platter": 12,
+        "Drinks": 12
       }
     };
 
