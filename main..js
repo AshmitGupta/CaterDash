@@ -15,10 +15,10 @@ document.addEventListener("DOMContentLoaded", function () {
     var priceElements = document.querySelectorAll('.prices-all');
 
     priceElements.forEach(function (element) {
-      console.log("Original text:", element.textContent);
+      // console.log("Original text:", element.textContent);
       var updatedText = element.textContent.replace(/\$\s*/g, '$');
       element.textContent = updatedText;
-      console.log("Updated text:", element.textContent);
+      // console.log("Updated text:", element.textContent);
     });
   }, 750);
   var cartItems = document.querySelectorAll('[id="cart-item"]');
