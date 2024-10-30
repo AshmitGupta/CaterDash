@@ -595,7 +595,7 @@ if (headingText.trim() === "Club Kitchen") {
   if (clubDiv) {
     clubDiv.style.display = "flex";
   } else {
-    console.error("clubDiv element not found.");
+    console.log("clubDiv element not found.");
   }
 
   function loadItemsForRestaurant(items) {
@@ -669,7 +669,7 @@ if (headingText.trim() === "Club Kitchen") {
       } else if (linkText === 'Restaurant 3') {
         loadItemsForRestaurant(itemsRestaurant3);
       } else {
-        console.error("No items found for the selected restaurant.");
+        console.log("No items found for the selected restaurant.");
       }
     });
   });
@@ -678,7 +678,7 @@ if (headingText.trim() === "Club Kitchen") {
   loadItemsForRestaurant(itemsRestaurant1);
 
 } else {
-  console.error("Main heading does not match 'Club Kitchen'.");
+  console.log("Main heading does not match 'Club Kitchen'.");
   clubDiv.style.display = "none";
 }
 
@@ -804,7 +804,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     console.log("MutationObserver set on sub-heading.");
   } else {
-    console.error("Sub-heading element not found.");
+    console.log("Sub-heading element not found.");
   }
 
   updateMarginBasedOnCategory();
