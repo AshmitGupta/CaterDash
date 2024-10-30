@@ -15,10 +15,10 @@ document.addEventListener("DOMContentLoaded", function () {
     var priceElements = document.querySelectorAll('.prices-all');
 
     priceElements.forEach(function (element) {
-      // console.log("Original text:", element.textContent);
+      console.log("Original text:", element.textContent);
       var updatedText = element.textContent.replace(/\$\s*/g, '$');
       element.textContent = updatedText;
-      // console.log("Updated text:", element.textContent);
+      console.log("Updated text:", element.textContent);
     });
   }, 750);
   var cartItems = document.querySelectorAll('[id="cart-item"]');
@@ -439,6 +439,7 @@ function updateSubLinksStyle() {
   quantityInputs.forEach(function (input) {
     input.value = '0';
     if (input.hasAttribute('min')) {
+      console.log("HI")
       input.setAttribute('min', '0');
     }
     input.addEventListener('keypress', function (event) {
@@ -594,7 +595,7 @@ if (headingText.trim() === "Club Kitchen") {
   if (clubDiv) {
     clubDiv.style.display = "flex";
   } else {
-    console.log("clubDiv element not found.");
+    console.error("clubDiv element not found.");
   }
 
   function loadItemsForRestaurant(items) {
@@ -668,7 +669,7 @@ if (headingText.trim() === "Club Kitchen") {
       } else if (linkText === 'Restaurant 3') {
         loadItemsForRestaurant(itemsRestaurant3);
       } else {
-        console.log("No items found for the selected restaurant.");
+        console.error("No items found for the selected restaurant.");
       }
     });
   });
@@ -677,7 +678,7 @@ if (headingText.trim() === "Club Kitchen") {
   loadItemsForRestaurant(itemsRestaurant1);
 
 } else {
-  console.log("Main heading does not match 'Club Kitchen'.");
+  console.error("Main heading does not match 'Club Kitchen'.");
   clubDiv.style.display = "none";
 }
 
@@ -748,6 +749,7 @@ document.addEventListener("DOMContentLoaded", function () {
     quantityInputs.forEach(function (input) {
       input.disabled = true; // Disable each input field
     });
+    console.log(`Disabled ${quantityInputs.length} quantity input fields.`);
   }
   const observer = new MutationObserver(function (mutations) {
     mutations.forEach(function (mutation) {
@@ -802,7 +804,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     console.log("MutationObserver set on sub-heading.");
   } else {
-    console.log("Sub-heading element not found.");
+    console.error("Sub-heading element not found.");
   }
 
   updateMarginBasedOnCategory();
@@ -813,10 +815,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function updatePrices() {
     priceElements.forEach(function (element) {
-      // console.log("Original text:", element.textContent);
+      console.log("Original text:", element.textContent);
       var updatedText = element.textContent.replace(/\$\s*/g, '$');
       element.textContent = updatedText;
-      // console.log("Updated text:", element.textContent);
+      console.log("Updated text:", element.textContent);
     });
   }
 
