@@ -439,7 +439,6 @@ function updateSubLinksStyle() {
   quantityInputs.forEach(function (input) {
     input.value = '0';
     if (input.hasAttribute('min')) {
-      console.log("HI")
       input.setAttribute('min', '0');
     }
     input.addEventListener('keypress', function (event) {
@@ -749,7 +748,6 @@ document.addEventListener("DOMContentLoaded", function () {
     quantityInputs.forEach(function (input) {
       input.disabled = true; // Disable each input field
     });
-    console.log(`Disabled ${quantityInputs.length} quantity input fields.`);
   }
   const observer = new MutationObserver(function (mutations) {
     mutations.forEach(function (mutation) {
@@ -815,10 +813,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function updatePrices() {
     priceElements.forEach(function (element) {
-      console.log("Original text:", element.textContent);
+      // console.log("Original text:", element.textContent);
       var updatedText = element.textContent.replace(/\$\s*/g, '$');
       element.textContent = updatedText;
-      console.log("Updated text:", element.textContent);
+      // console.log("Updated text:", element.textContent);
     });
   }
 
