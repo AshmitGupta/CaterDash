@@ -241,7 +241,7 @@ function updateSubLinksStyle() {
       } else {
         if (suffixes.some(suffix => displayText.endsWith(suffix))) {
           if (displayText.endsWith('Trays')) {
-            displayText += ' (Serves 4)';
+            displayText += ' (Serves 6)';
           } else {
             if (displayText.endsWith('Waffles')) {
               displayText += ' (Serves 21)';
