@@ -591,7 +591,9 @@ var itemsRestaurant3 = [
   "Corporate Pack"
 ];
 
-var headingText = document.getElementById("main-heading").innerText;
+var mainHeadingElement = document.getElementById('main-heading');
+var headingText = mainHeadingElement ? mainHeadingElement.innerText : '';
+
 var clubDiv = document.getElementById("club-div");
 
 if (headingText.trim() === "Club Kitchen") {
