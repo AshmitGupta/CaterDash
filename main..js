@@ -684,7 +684,11 @@ if (headingText.trim() === "Club Kitchen") {
 
 } else {
   console.error("Main heading does not match 'Club Kitchen'.");
-  clubDiv.style.display = "none";
+  if (clubDiv) {
+    clubDiv.style.display = "none";
+  } else {
+    console.error("clubDiv element not found.");
+  }
 }
 
 document.querySelectorAll('.select-field.w-select').forEach(function(selectElement) {
