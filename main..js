@@ -143,6 +143,9 @@ function updateSubLinksStyle() {
       "Baked Goods & Coffee": {
         "Baked Goods Platter": 12,
         "Drinks": 12
+      },
+      "Charcuterie & More": {
+        "Charcuterie, Mezze & Crostinis": 50
       }
     };
 
