@@ -681,7 +681,6 @@ if (headingText.trim() === "Club Kitchen") {
 
   // Load items for "Restaurant 1" by default when the page loads
   loadItemsForRestaurant(itemsRestaurant1);
-
 } else {
   console.error("Main heading does not match 'Club Kitchen'.");
   if (clubDiv) {
