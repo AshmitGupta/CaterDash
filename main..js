@@ -566,7 +566,6 @@ if (mainHeading) {
 }
 
   // Check if the div with id 'main-heading' has textContent 'Festive Menu'
-  const mainHeading = document.getElementById('main-heading');
   if (mainHeading && mainHeading.textContent.trim() === 'Festive Menu') {
       // 1) Show all rich content boxes
       const richTextBlocks = document.querySelectorAll('.rich-text-block');
