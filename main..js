@@ -564,7 +564,7 @@ if (mainHeading) {
     toggleDisplay(false);
   }
 }
-  console.log(mainHeading);
+  console.log(mainHeading.textContent);
   // Check if the div with id 'main-heading' has textContent 'Festive Menu'
   if (mainHeading && mainHeading.textContent.trim() === 'Festive Menu') {
       // 1) Show all rich content boxes
