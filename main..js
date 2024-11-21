@@ -117,6 +117,7 @@ function updateSubLinksStyle() {
       // Change the textContent of all divs with id 'right-block' to "Minimum 50 guests"
       const rightBlocks = document.querySelectorAll('#right-block');
       rightBlocks.forEach(div => {
+          div.style.display = 'block'
           div.textContent = 'Minimum 50 guests';
       });
   
