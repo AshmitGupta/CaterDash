@@ -564,30 +564,37 @@ if (mainHeading) {
     toggleDisplay(false);
   }
 }
-  console.log(mainHeading.textContent);
-  // Check if the div with id 'main-heading' has textContent 'Festive Menu'
-  if (mainHeading && mainHeading.textContent.trim() === 'Festive Menu') {
-      // 1) Show all rich content boxes
-      const richTextBlocks = document.querySelectorAll('.rich-text-block');
-      richTextBlocks.forEach(block => {
-          block.style.display = 'block'; // Assuming 'block' is the intended display style
-      });
-  
-      // 2) Show all divs with id 'per-person-div'
-      togglePerPersonDivs(true);
-  
-      // Change the textContent of all divs with id 'right-block' to "Minimum 50 guests"
-      const rightBlocks = document.querySelectorAll('#right-block');
-      rightBlocks.forEach(div => {
-          div.textContent = 'Minimum 50 guests';
-      });
-  
-      // 3) Update the 'min' attribute of all input elements with name 'commerce-add-to-cart-quantity-input' to 50
-      const quantityInputs = document.querySelectorAll('input[name="commerce-add-to-cart-quantity-input"]');
-      quantityInputs.forEach(input => {
-          input.setAttribute('min', '50');
-      });
-  }
+
+setTimeout(() => {
+    const mainHeadingCopy = document.getElementById('main-heading');
+
+    console.log(mainHeadingCopy);
+
+    // Check if the div with id 'main-heading' has textContent 'Festive Menu'
+    if (mainHeadingCopy && mainHeadingCopy.textContent.trim() === 'Festive Menu') {
+        // 1) Show all rich content boxes
+        const richTextBlocks = document.querySelectorAll('.rich-text-block');
+        richTextBlocks.forEach(block => {
+            block.style.display = 'block'; // Assuming 'block' is the intended display style
+        });
+
+        // 2) Show all divs with id 'per-person-div'
+        togglePerPersonDivs(true);
+
+        // Change the textContent of all divs with id 'right-block' to "Minimum 50 guests"
+        const rightBlocks = document.querySelectorAll('#right-block');
+        rightBlocks.forEach(div => {
+            div.textContent = 'Minimum 50 guests';
+        });
+
+        // 3) Update the 'min' attribute of all input elements with name 'commerce-add-to-cart-quantity-input' to 50
+        const quantityInputs = document.querySelectorAll('input[name="commerce-add-to-cart-quantity-input"]');
+        quantityInputs.forEach(input => {
+            input.setAttribute('min', '50');
+        });
+    }
+}, 1000); // Waits 1000ms (1 second) before executing the code
+
 
 var itemsRestaurant1 = [
   "Small Platter",
