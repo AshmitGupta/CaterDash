@@ -146,9 +146,6 @@ function updateSubLinksStyle() {
       },
       "Charcuterie & More": {
         "Charcuterie, Mezze & Crostinis": 50
-      },
-      "Festive Menu": {
-        "Festive Menus": 50
       }
     };
 
