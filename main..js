@@ -609,7 +609,7 @@ setTimeout(() => {
             input.setAttribute('min', '50');
         });
     }
-}, 1000); // Waits 1000ms (1 second) before executing the code
+}, 500); // Waits 1000ms (1 second) before executing the code
 
 
 var itemsRestaurant1 = [
