@@ -581,7 +581,7 @@ setTimeout(() => {
         const perPersonDivs = document.querySelectorAll('.div-block-66');
         if (perPersonDivs.length > 0) {
           perPersonDivs.forEach(block => {
-            block.style.display = 'block'; // Assuming 'block' is the intended display style
+            block.style.display = 'flex'; // Assuming 'block' is the intended display style
           });
         } else {
             console.error('per-person-div elements not found!');
@@ -591,6 +591,16 @@ setTimeout(() => {
         const rightBlocks = document.querySelectorAll('#right-block');
         rightBlocks.forEach(div => {
             div.textContent = 'Minimum 50 guests';
+        });
+
+        const leftBlocks = document.querySelectorAll('#left-block');
+        rightBlocks.forEach(div => {
+            div.textContent = '';
+        });
+
+        const midBlocks = document.querySelectorAll('#mid-block');
+        rightBlocks.forEach(div => {
+            div.textContent = '';
         });
 
         // 3) Update the 'min' attribute of all input elements with name 'commerce-add-to-cart-quantity-input' to 50
