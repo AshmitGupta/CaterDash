@@ -580,7 +580,9 @@ setTimeout(() => {
 
         const perPersonDivs = document.querySelectorAll('.div-block-66');
         if (perPersonDivs.length > 0) {
-            togglePerPersonDivs(true); // Show the elements
+          perPersonDivs.forEach(block => {
+            block.style.display = 'block'; // Assuming 'block' is the intended display style
+          });
         } else {
             console.error('per-person-div elements not found!');
         }
