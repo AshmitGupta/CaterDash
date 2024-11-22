@@ -594,12 +594,12 @@ setTimeout(() => {
         });
 
         const leftBlocks = document.querySelectorAll('#left-block');
-        rightBlocks.forEach(div => {
+        leftBlocks.forEach(div => {
             div.textContent = '';
         });
 
         const midBlocks = document.querySelectorAll('#mid-block');
-        rightBlocks.forEach(div => {
+        midBlocks.forEach(div => {
             div.textContent = '';
         });
 
