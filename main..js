@@ -578,8 +578,12 @@ setTimeout(() => {
             block.style.display = 'block'; // Assuming 'block' is the intended display style
         });
 
-        // 2) Show all divs with id 'per-person-div'
-        togglePerPersonDivs(true);
+        const perPersonDivs = document.querySelectorAll('.div-block-66');
+        if (perPersonDivs.length > 0) {
+            togglePerPersonDivs(true); // Show the elements
+        } else {
+            console.error('per-person-div elements not found!');
+        }
 
         // Change the textContent of all divs with id 'right-block' to "Minimum 50 guests"
         const rightBlocks = document.querySelectorAll('#right-block');
