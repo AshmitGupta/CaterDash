@@ -560,7 +560,11 @@ if (mainHeading) {
   } else if (mainHeadingText === 'Holiday Menu') {
     updateContent('Holiday Menu', 'Nest Catering', 'Committed to creating exceptional and sustainably responsible experiences for you and your guests.');
     toggleDisplay(true);
-  } else {
+  } else if (mainHeadingText === 'Say Hey Cafe Catering') {
+    updateContent('Holiday Menu', 'Say Hey Cafe Catering', 'Committed to creating exceptional and sustainably responsible experiences for you and your guests.');
+    toggleDisplay(true);
+  }
+  else {
     toggleDisplay(false);
   }
 }
