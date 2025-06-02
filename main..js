@@ -146,6 +146,11 @@ function updateSubLinksStyle() {
       },
       "Charcuterie & More": {
         "Charcuterie, Mezze & Crostinis": 50
+      },
+      "Zab Bite": {
+        "Appetizer Platter": 10,
+        "Canape Platter": 10,
+        "Main Platter": 10
       }
     };
 
