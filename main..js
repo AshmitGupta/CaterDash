@@ -158,6 +158,8 @@ function updateSubLinksStyle() {
         "Main Platter": 10
       },
       "Specialty Desserts": {
+        "5oz Cookies": 20,
+        "Mini Waffles": 21,
         "Lebanese Crepes & Waffles": 12
       }
     };
