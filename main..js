@@ -156,6 +156,9 @@ function updateSubLinksStyle() {
         "Appetizer Platter": 10,
         "Canape Platter": 5,
         "Main Platter": 10
+      },
+      "Specialty Desserts": {
+        "Lebanese Crepes & Waffles": 12
       }
     };
 
