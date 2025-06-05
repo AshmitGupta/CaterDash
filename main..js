@@ -154,7 +154,7 @@ function updateSubLinksStyle() {
       },
       "Thai": {
         "Appetizer Platter": 10,
-        "Canape Platter": 10,
+        "Canape Platter": 5,
         "Main Platter": 10
       }
     };
