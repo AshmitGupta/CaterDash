@@ -161,6 +161,11 @@ function updateSubLinksStyle() {
         "5oz Cookies": 20,
         "Mini Waffles": 21,
         "Lebanese Crepes & Waffles": 12
+      },
+      "Breakfast, Baked Goods & Coffee": {
+        "Baked Goods Platter": 12,
+        "Breakfast Wraps & Sandwiches": 12,
+        "Coffee & Tea": 12,
       }
     };
 
