@@ -166,6 +166,9 @@ function updateSubLinksStyle() {
         "Baked Goods Platter": 12,
         "Breakfast Wraps & Sandwiches": 12,
         "Coffee & Tea": 12,
+      },
+      "Mexican": {
+        "Tacos": 20
       }
     };
 
