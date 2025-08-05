@@ -168,6 +168,7 @@ function updateSubLinksStyle() {
         "Coffee & Tea": 12,
       },
       "Mexican": {
+        "Sides Platter": 20,
         "Tacos": 20
       }
     };
