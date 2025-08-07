@@ -150,7 +150,7 @@ function updateSubLinksStyle() {
           "Baked Goods Platter": 12,
           "Drinks": 12
         },
-        "Charcuterie & More": {
+        "Charcuterie, Crostinis & More": {
           "Charcuterie, Mezze & Crostinis": 50
         },
         "Zab Bite": {
