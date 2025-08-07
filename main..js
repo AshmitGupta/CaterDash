@@ -179,8 +179,9 @@ function updateSubLinksStyle() {
         }
       },
       "Toronto": {
-        "Mexican": {
-          "Tacos": 20
+        "Charcuterie & More": {
+          "Charcuterie, Fruit & Veggie Trays": 15,
+          "Sandwiches": 12
         }
       }
     };
