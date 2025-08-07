@@ -105,73 +105,87 @@ function updateSubLinksStyle() {
     const perPersonDiv = document.querySelectorAll('.div-block-66');
     const subHeading = document.getElementById('sub-heading');
 
-    const restaurantServingSizes = {
-      "Jo's Italian Deli": {
-        "Sides Platter": 8,
-        "Pasta Platter": 4,
-        "Sandwich Platter": 4,
-        "default": {
-          "Trays": 4,
-          "Waffles": 21,
-          "default": 20
+    const href = window.location.href.toLowerCase();
+    const city = (href.includes('toronto') || href.includes('calgary'))
+      ? 'Toronto'
+      : 'Vancouver';
+
+    const servingSizesByCity = {
+      "Vancouver": {
+        "Jo's Italian Deli": {
+          "Sides Platter": 8,
+          "Pasta Platter": 4,
+          "Sandwich Platter": 4,
+          "default": {
+            "Trays": 4,
+            "Waffles": 21,
+            "default": 20
+          }
+        },
+        "Mangia's Sandwiches": {
+          "Sides Platter": 10,
+          "Regular Sandwich Platter": 5,
+          "Large Sandwich Platter": 10
+        },
+        "Obanhmi": {
+          "Sides Box": 20,
+          "Banh Mi Box": 20
+        },
+        "Sweet Obsession": {
+          "Pastry Box": 12,
+          "Food": 20,
+          "Beverages": 12
+        },
+        "Holiday Menu": {
+          "Breakfast": 20,
+          "Plated": 20,
+          "Canapés (Cold)": 3,
+          "Canapés (Hot)": 3,
+          "Canapés (Sweet)": 3,
+          "Reception Stations": 20,
+          "Buffet": 20,
+          "Chef Attended Reception Station": 20
+        },
+        "Baked Goods & Coffee": {
+          "Baked Goods Platter": 12,
+          "Drinks": 12
+        },
+        "Charcuterie & More": {
+          "Charcuterie, Mezze & Crostinis": 50
+        },
+        "Zab Bite": {
+          "Appetizer Platter": 10,
+          "Canape Platter": 10,
+          "Main Platter": 10
+        },
+        "Thai": {
+          "Appetizer Platter": 10,
+          "Canape Platter": 5,
+          "Main Platter": 10
+        },
+        "Specialty Desserts": {
+          "5oz Cookies": 20,
+          "Mini Waffles": 21,
+          "Lebanese Crepes & Waffles": 12
+        },
+        "Breakfast, Baked Goods & Coffee": {
+          "Baked Goods Platter": 12,
+          "Breakfast Wraps & Sandwiches": 12,
+          "Coffee & Tea": 12
+        },
+        "Mexican": {
+          "Sides Platter": 20,
+          "Tacos": 20
         }
       },
-      "Mangia's Sandwiches": {
-        "Sides Platter": 10,
-        "Regular Sandwich Platter": 5,
-        "Large Sandwich Platter": 10
-      },
-      "Obanhmi": {
-        "Sides Box": 20,
-        "Banh Mi Box": 20
-      },
-      "Sweet Obsession": {
-        "Pastry Box": 12,
-        "Food": 20,
-        "Beverages": 12
-      },
-      "Holiday Menu": {
-        "Breakfast": 20,
-        "Plated": 20,
-        "Canapés (Cold)": 3,
-        "Canapés (Hot)": 3,
-        "Canapés (Sweet)": 3,
-        "Reception Stations": 20,
-        "Buffet": 20,
-        "Chef Attended Reception Station": 20
-      },
-      "Baked Goods & Coffee": {
-        "Baked Goods Platter": 12,
-        "Drinks": 12
-      },
-      "Charcuterie & More": {
-        "Charcuterie, Mezze & Crostinis": 50
-      },
-      "Zab Bite": {
-        "Appetizer Platter": 10,
-        "Canape Platter": 10,
-        "Main Platter": 10
-      },
-      "Thai": {
-        "Appetizer Platter": 10,
-        "Canape Platter": 5,
-        "Main Platter": 10
-      },
-      "Specialty Desserts": {
-        "5oz Cookies": 20,
-        "Mini Waffles": 21,
-        "Lebanese Crepes & Waffles": 12
-      },
-      "Breakfast, Baked Goods & Coffee": {
-        "Baked Goods Platter": 12,
-        "Breakfast Wraps & Sandwiches": 12,
-        "Coffee & Tea": 12,
-      },
-      "Mexican": {
-        "Sides Platter": 20,
-        "Tacos": 20
+      "Toronto": {
+        "Mexican": {
+          "Tacos": 20
+        }
       }
     };
+
+    const restaurantServingSizes = servingSizesByCity[city] || {};
 
     if (subCategoryText) {
       let displayText = toTitleCase(subCategoryText);
