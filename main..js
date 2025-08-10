@@ -186,7 +186,7 @@ function updateSubLinksStyle() {
         "American": {
           "Sides": 12,
           "Sliders": 12,
-          "Dessert: 12
+          "Dessert": 12
         }
       }
     };
