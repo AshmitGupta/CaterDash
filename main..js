@@ -26,6 +26,16 @@ document.addEventListener("DOMContentLoaded", function () {
     cartItem.style.display = 'block';
   });
 
+  var backBtn = document.getElementById("order-back-btn");
+  if (backBtn) {
+    backBtn.addEventListener("click", function (event) {
+      if (window.location.href.toLowerCase().includes("toronto")) {
+        event.preventDefault(); // stop original link
+        window.location.href = "https://www.caterdash.com/toronto";
+      }
+    });
+  }
+
   function sortDishes() {
     var mainList = document.querySelector('#main-list');
     var dishes = Array.from(mainList.querySelectorAll('.w-dyn-item')).filter(function (dish) {
