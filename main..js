@@ -182,6 +182,11 @@ function updateSubLinksStyle() {
         "Charcuterie & More": {
           "Charcuterie, Fruit & Veggie Trays": 15,
           "Sandwiches": 12
+        },
+        "American": {
+          "Sides": 12,
+          "Sliders": 12,
+          "Dessert: 12
         }
       }
     };
