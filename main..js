@@ -36,6 +36,18 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  if (window.location.href.toLowerCase().includes("toronto")) {
+    var heading = document.getElementById("top-heading");
+    if (heading) {
+      heading.textContent = "Toronto Catering";
+    }
+
+    var description = document.getElementById("top-description");
+    if (description) {
+      description.textContent = "Explore diverse culinary delights with CaterDash’s extensive menu selection, spanning various cuisines in Toronto, ON";
+    }
+  }
+
   function sortDishes() {
     var mainList = document.querySelector('#main-list');
     var dishes = Array.from(mainList.querySelectorAll('.w-dyn-item')).filter(function (dish) {
