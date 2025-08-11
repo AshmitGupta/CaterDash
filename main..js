@@ -209,6 +209,10 @@ function updateSubLinksStyle() {
           "Sides": 12,
           "Sliders": 12,
           "Dessert": 12
+        },
+        "Baked Goods & Coffee": {
+          "Baked Goods Platter": 20,
+          "Drinks": 10
         }
       }
     };
