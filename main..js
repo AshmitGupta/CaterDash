@@ -66,10 +66,16 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function toTitleCase(str) {
-    return str.replace(/\w\S*/g, function (txt) {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    return str.replace(/\b\w+/g, function (word) {
+      return word
+        .split('-')
+        .map(function (part) {
+          return part.charAt(0).toUpperCase() + part.slice(1).toLowerCase();
+        })
+        .join('-');
     });
   }
+
   function formatTextForComparison(text) {
     return text.toLowerCase().replace(/\s+/g, '-');
   }
