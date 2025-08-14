@@ -308,7 +308,7 @@ function updateSubLinksStyle() {
 
   function showPopup() {
     console.log("[Cart Debug] Showing popup");
-    if (popup) popup.style.display = "";
+    if (popup) popup.style.display = "block";
   }
 
   function hidePopup() {
