@@ -762,8 +762,6 @@ setTimeout(() => {
   
     // Initial pass (handles items already in cart)
     scheduleCheck();
-  });
-
 
 var itemsRestaurant1 = [
   "Small Platter",
