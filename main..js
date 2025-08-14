@@ -232,7 +232,7 @@ function updateSubLinksStyle() {
   }
 
   const popup = document.getElementById("popup-province-error");
-  const deleteOkBtn = document.getElementById("cross-btn");
+  const deleteOkBtn = document.getElementById("delete-okay-button");
 
   const isTorontoPage = () => location.href.toLowerCase().includes("toronto");
 
