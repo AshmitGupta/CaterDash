@@ -223,6 +223,69 @@ function updateSubLinksStyle() {
       }
     };
 
+  const listEl = document.getElementById("cart-items-list");
+  if (listEl) {
+    const popup = document.getElementById("popup-province-error");
+    const isTorontoPage = () => location.href.toLowerCase().includes("toronto");
+
+    function findCartItemContainer(el) {
+      return (
+        el.closest(
+          '[data-node-type="commerce-cart-item"], .w-commerce-commercecartitem, li, .cart-item, [role="listitem"]'
+        ) || el.parentElement
+      );
+    }
+
+    function getHandleFromLinkBlock(linkBlock) {
+      const a = linkBlock.tagName === "A" ? linkBlock : linkBlock.querySelector("a");
+      if (!a || !a.href) return "";
+      try {
+        const path = a.href.replace(location.origin, "").split("?")[0].replace(/\/$/, "");
+        return path.split("/").pop().toLowerCase();
+      } catch {
+        return "";
+      }
+    }
+
+    let checkTimer = null;
+    function scheduleCheck() {
+      clearTimeout(checkTimer);
+      checkTimer = setTimeout(checkCart, 120);
+    }
+
+    function checkCart() {
+      if (!isTorontoPage()) {
+        if (popup) popup.style.display = "none";
+        return;
+      }
+      const linkBlocks = listEl.querySelectorAll('[id="cart-items-link-block"]'); // Webflow may duplicate IDs
+      const offenders = [];
+      linkBlocks.forEach(lb => {
+        const handle = getHandleFromLinkBlock(lb);
+        if (!handle || !handle.includes("toronto")) offenders.push(lb);
+      });
+
+      if (offenders.length) {
+        if (popup) popup.style.display = "";
+        offenders.forEach(lb => {
+          const item = findCartItemContainer(lb);
+          if (!item) return;
+          const removeBtn = item.querySelector(
+            ".remove-button, .w-commerce-commercecartitemremovebutton, [data-node-type='commerce-cart-remove-item'], [data-element='remove']"
+          );
+          if (removeBtn) setTimeout(() => removeBtn.click(), 0);
+        });
+      } else {
+        if (popup) popup.style.display = "none";
+      }
+    }
+
+    const observerCart = new MutationObserver(scheduleCheck);
+    observerCart.observe(listEl, { childList: true, subtree: true, attributes: true, characterData: true });
+
+    scheduleCheck(); // initial pass
+  }
+
     const restaurantServingSizes = servingSizesByCity[city] || {};
 
     if (subCategoryText) {
@@ -690,7 +753,6 @@ setTimeout(() => {
         });
     }
 }, 500); // Waits 1000ms (1 second) before executing the code
-
 
 var itemsRestaurant1 = [
   "Small Platter",
