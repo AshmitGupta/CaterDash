@@ -223,69 +223,108 @@ function updateSubLinksStyle() {
       }
     };
 
+  console.log("[Cart Debug] DOMContentLoaded fired");
+
   const listEl = document.getElementById("cart-items-list");
   if (listEl) {
+    console.log("[Cart Debug] Found #cart-items-list:", listEl);
+
     const popup = document.getElementById("popup-province-error");
     const isTorontoPage = () => location.href.toLowerCase().includes("toronto");
 
     function findCartItemContainer(el) {
-      return (
-        el.closest(
-          '[data-node-type="commerce-cart-item"], .w-commerce-commercecartitem, li, .cart-item, [role="listitem"]'
-        ) || el.parentElement
-      );
+      const container = el.closest(
+        '[data-node-type="commerce-cart-item"], .w-commerce-commercecartitem, li, .cart-item, [role="listitem"]'
+      ) || el.parentElement;
+      console.log("[Cart Debug] Found cart item container:", container);
+      return container;
     }
 
     function getHandleFromLinkBlock(linkBlock) {
       const a = linkBlock.tagName === "A" ? linkBlock : linkBlock.querySelector("a");
-      if (!a || !a.href) return "";
+      if (!a || !a.href) {
+        console.warn("[Cart Debug] No <a> tag or href found in linkBlock:", linkBlock);
+        return "";
+      }
       try {
         const path = a.href.replace(location.origin, "").split("?")[0].replace(/\/$/, "");
-        return path.split("/").pop().toLowerCase();
-      } catch {
+        const handle = path.split("/").pop().toLowerCase();
+        console.log("[Cart Debug] Extracted handle:", handle);
+        return handle;
+      } catch (err) {
+        console.error("[Cart Debug] Error extracting handle:", err);
         return "";
       }
     }
 
     let checkTimer = null;
     function scheduleCheck() {
+      console.log("[Cart Debug] scheduleCheck called");
       clearTimeout(checkTimer);
       checkTimer = setTimeout(checkCart, 120);
     }
 
     function checkCart() {
+      console.log("[Cart Debug] Running checkCart()");
       if (!isTorontoPage()) {
+        console.log("[Cart Debug] Not a Toronto page, hiding popup");
         if (popup) popup.style.display = "none";
         return;
       }
-      const linkBlocks = listEl.querySelectorAll('[id="cart-items-link-block"]'); // Webflow may duplicate IDs
+
+      console.log("[Cart Debug] Toronto page detected, checking items...");
+      const linkBlocks = listEl.querySelectorAll('[id="cart-items-link-block"]');
+      console.log("[Cart Debug] Found", linkBlocks.length, "cart item link blocks");
+
       const offenders = [];
       linkBlocks.forEach(lb => {
         const handle = getHandleFromLinkBlock(lb);
-        if (!handle || !handle.includes("toronto")) offenders.push(lb);
+        if (!handle || !handle.includes("toronto")) {
+          console.warn("[Cart Debug] Offending item (non-Toronto):", handle, lb);
+          offenders.push(lb);
+        } else {
+          console.log("[Cart Debug] Valid Toronto item:", handle);
+        }
       });
 
       if (offenders.length) {
+        console.warn("[Cart Debug] Found", offenders.length, "offending items. Showing popup + removing them.");
         if (popup) popup.style.display = "";
         offenders.forEach(lb => {
           const item = findCartItemContainer(lb);
-          if (!item) return;
+          if (!item) {
+            console.warn("[Cart Debug] No cart item container found for offender:", lb);
+            return;
+          }
           const removeBtn = item.querySelector(
             ".remove-button, .w-commerce-commercecartitemremovebutton, [data-node-type='commerce-cart-remove-item'], [data-element='remove']"
           );
-          if (removeBtn) setTimeout(() => removeBtn.click(), 0);
+          if (removeBtn) {
+            console.log("[Cart Debug] Clicking remove button for:", lb);
+            setTimeout(() => removeBtn.click(), 0);
+          } else {
+            console.warn("[Cart Debug] Remove button not found for:", lb);
+          }
         });
       } else {
+        console.log("[Cart Debug] All items are valid Toronto items. Hiding popup.");
         if (popup) popup.style.display = "none";
       }
     }
 
-    const observerCart = new MutationObserver(scheduleCheck);
+    const observerCart = new MutationObserver((mutations) => {
+      console.log("[Cart Debug] Mutation observed:", mutations);
+      scheduleCheck();
+    });
     observerCart.observe(listEl, { childList: true, subtree: true, attributes: true, characterData: true });
 
-    scheduleCheck(); // initial pass
+    console.log("[Cart Debug] Initial cart check running...");
+    scheduleCheck();
+  } else {
+    console.warn("[Cart Debug] #cart-items-list not found on this page");
   }
 
+    
     const restaurantServingSizes = servingSizesByCity[city] || {};
 
     if (subCategoryText) {
