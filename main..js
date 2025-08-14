@@ -226,33 +226,41 @@ function updateSubLinksStyle() {
   console.log("[Cart Debug] DOMContentLoaded fired");
 
   const listEl = document.getElementById("cart-items-list");
-  if (!listEl) return; // only run this block on pages with a cart
+  if (!listEl) {
+    console.warn("[Cart Debug] No #cart-items-list found, skipping cart logic");
+    return;
+  }
 
   const popup = document.getElementById("popup-province-error");
-  const deleteOkBtn = document.getElementById("delete-okay-button");
+  const deleteOkBtn = document.getElementById("cross-btn");
 
   const isTorontoPage = () => location.href.toLowerCase().includes("toronto");
 
-  // cache of the most recent offenders, filled by checkCart(), consumed on delete click
   let currentOffenders = [];
   let attachedDeleteListener = false;
   let checkTimer = null;
 
   function findCartItemContainer(el) {
-    return (
-      el.closest(
-        '[data-node-type="commerce-cart-item"], .w-commerce-commercecartitem, li, .cart-item, [role="listitem"]'
-      ) || el.parentElement
-    );
+    const container = el.closest(
+      '[data-node-type="commerce-cart-item"], .w-commerce-commercecartitem, li, .cart-item, [role="listitem"]'
+    ) || el.parentElement;
+    console.log("[Cart Debug] Found cart item container:", container);
+    return container;
   }
 
   function getHandleFromLinkBlock(linkBlock) {
     const a = linkBlock.tagName === "A" ? linkBlock : linkBlock.querySelector("a");
-    if (!a || !a.href) return "";
+    if (!a || !a.href) {
+      console.warn("[Cart Debug] No <a> tag or href found in:", linkBlock);
+      return "";
+    }
     try {
       const path = a.href.replace(location.origin, "").split("?")[0].replace(/\/$/, "");
-      return path.split("/").pop().toLowerCase();
-    } catch {
+      const handle = path.split("/").pop().toLowerCase();
+      console.log("[Cart Debug] Extracted handle:", handle);
+      return handle;
+    } catch (err) {
+      console.error("[Cart Debug] Error extracting handle:", err);
       return "";
     }
   }
@@ -264,26 +272,31 @@ function updateSubLinksStyle() {
 
   function checkCart() {
     const torontoPage = isTorontoPage();
-    const linkBlocks = listEl.querySelectorAll('[id="cart-items-link-block"]'); // Webflow may duplicate IDs
+    console.log("[Cart Debug] Checking cart. Page type:", torontoPage ? "Toronto" : "Non-Toronto");
+
+    const linkBlocks = listEl.querySelectorAll('[id="cart-items-link-block"]');
+    console.log("[Cart Debug] Found", linkBlocks.length, "cart item link blocks");
+
     if (linkBlocks.length === 0) {
+      console.log("[Cart Debug] Cart empty, hiding popup");
       hidePopup();
       currentOffenders = [];
       return;
     }
 
-    // Build offenders based on page rule
     const offenders = [];
     linkBlocks.forEach(lb => {
       const handle = getHandleFromLinkBlock(lb);
       const isTorontoItem = handle.includes("toronto");
-
-      // Rule: Toronto page => ALL items must be toronto
-      //       Non-Toronto page => NO item must be toronto
       const violates = torontoPage ? !isTorontoItem : isTorontoItem;
+
+      console.log(`[Cart Debug] Item handle: ${handle}, IsTorontoItem: ${isTorontoItem}, Violates: ${violates}`);
+
       if (violates) offenders.push(lb);
     });
 
     currentOffenders = offenders;
+    console.log("[Cart Debug] Found", offenders.length, "offending items");
 
     if (offenders.length > 0) {
       showPopup();
@@ -294,44 +307,53 @@ function updateSubLinksStyle() {
   }
 
   function showPopup() {
+    console.log("[Cart Debug] Showing popup");
     if (popup) popup.style.display = "";
   }
 
   function hidePopup() {
+    console.log("[Cart Debug] Hiding popup");
     if (popup) popup.style.display = "none";
   }
 
   function attachDeleteListenerOnce() {
     if (attachedDeleteListener || !deleteOkBtn) return;
     attachedDeleteListener = true;
+    console.log("[Cart Debug] Attaching delete listener to #delete-okay-button");
 
     deleteOkBtn.addEventListener("click", function () {
-      if (!currentOffenders || currentOffenders.length === 0) {
-        hidePopup();
-        return;
-      }
+      console.log("[Cart Debug] Delete button clicked. Removing", currentOffenders.length, "offenders");
 
-      // Remove each current offender by clicking its remove button
       currentOffenders.forEach(lb => {
         const item = findCartItemContainer(lb);
-        if (!item) return;
+        if (!item) {
+          console.warn("[Cart Debug] No container found for offender");
+          return;
+        }
         const removeBtn = item.querySelector(
           ".remove-button, .w-commerce-commercecartitemremovebutton, [data-node-type='commerce-cart-remove-item'], [data-element='remove']"
         );
-        if (removeBtn) removeBtn.click();
+        if (removeBtn) {
+          console.log("[Cart Debug] Clicking remove button for:", getHandleFromLinkBlock(lb));
+          removeBtn.click();
+        } else {
+          console.warn("[Cart Debug] No remove button found for:", getHandleFromLinkBlock(lb));
+        }
       });
 
-      // Clear and re-check after DOM updates
       currentOffenders = [];
       hidePopup();
       scheduleCheck();
     });
   }
 
-  const observerCart = new MutationObserver(scheduleCheck);
+  const observerCart = new MutationObserver((mutations) => {
+    console.log("[Cart Debug] Mutation observed:", mutations);
+    scheduleCheck();
+  });
   observerCart.observe(listEl, { childList: true, subtree: true, attributes: true, characterData: true });
 
-  // Initial pass
+  console.log("[Cart Debug] Initial cart check running...");
   scheduleCheck();
     
     const restaurantServingSizes = servingSizesByCity[city] || {};
