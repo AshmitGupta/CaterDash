@@ -692,6 +692,79 @@ setTimeout(() => {
 }, 500); // Waits 1000ms (1 second) before executing the code
 
 
+    const listEl = document.getElementById("cart-items-list");
+    if (!listEl) return;
+  
+    const popup = document.getElementById("popup-province-error");
+    const isTorontoPage = () => location.href.toLowerCase().includes("toronto");
+  
+    // Robustly find the cart-item wrapper for a child element
+    function findCartItemContainer(el) {
+      return (
+        el.closest(
+          '[data-node-type="commerce-cart-item"], .w-commerce-commercecartitem, li, .cart-item, [role="listitem"]'
+        ) || el.parentElement
+      );
+    }
+  
+    // Extract product handle from a link block (supports <a> or a child <a>)
+    function getHandleFromLinkBlock(linkBlock) {
+      const a = linkBlock.tagName === "A" ? linkBlock : linkBlock.querySelector("a");
+      if (!a || !a.href) return "";
+      try {
+        const path = a.href.replace(location.origin, "").split("?")[0].replace(/\/$/, "");
+        return path.split("/").pop().toLowerCase();
+      } catch (e) {
+        return "";
+      }
+    }
+  
+    let checkTimer = null;
+    function scheduleCheck() {
+      clearTimeout(checkTimer);
+      checkTimer = setTimeout(checkCart, 120); // debounce to coalesce many mutations
+    }
+  
+    function checkCart() {
+      if (!isTorontoPage()) {
+        if (popup) popup.style.display = "none";
+        return;
+      }
+  
+      // Webflow can duplicate IDs, so query by attribute
+      const linkBlocks = listEl.querySelectorAll('[id="cart-items-link-block"]');
+      const offenders = [];
+  
+      linkBlocks.forEach(lb => {
+        const handle = getHandleFromLinkBlock(lb);
+        if (!handle || !handle.includes("toronto")) offenders.push(lb);
+      });
+  
+      if (offenders.length > 0) {
+        if (popup) popup.style.display = ""; // show popup
+        // Remove each non-Toronto item by clicking its remove button inside the same cart item
+        offenders.forEach(lb => {
+          const item = findCartItemContainer(lb);
+          if (!item) return;
+          const removeBtn = item.querySelector(
+            ".remove-button, .w-commerce-commercecartitemremovebutton, [data-node-type='commerce-cart-remove-item'], [data-element='remove']"
+          );
+          if (removeBtn) setTimeout(() => removeBtn.click(), 0);
+        });
+      } else {
+        if (popup) popup.style.display = "none"; // all good, hide popup
+      }
+    }
+  
+    // Observe adds/removes/attribute changes within the cart list
+    const observer = new MutationObserver(scheduleCheck);
+    observer.observe(listEl, { childList: true, subtree: true, attributes: true, characterData: true });
+  
+    // Initial pass (handles items already in cart)
+    scheduleCheck();
+  });
+
+
 var itemsRestaurant1 = [
   "Small Platter",
   "Medium Platter",
