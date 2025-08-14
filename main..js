@@ -267,6 +267,17 @@ function updateSubLinksStyle() {
     clearTimeout(checkTimer);
     checkTimer = setTimeout(checkCart, 200); // slightly longer debounce helps
   }
+    
+  const IGNORE_HANDLES = [
+    "serving-tong",
+    "serving-spoon",
+    "plates",
+    "cutlery"
+  ];
+  
+  function isIgnoredHandle(handle) {
+    return IGNORE_HANDLES.some(ignored => handle.endsWith(ignored));
+  }
 
   function checkCart() {
     const torontoPage = isTorontoPage();
@@ -281,6 +292,12 @@ function updateSubLinksStyle() {
     const offenders = [];
     linkBlocks.forEach(lb => {
       const handle = getHandleFromLinkBlock(lb);
+
+      if (isIgnoredHandle(handle)) {
+        console.log("[Cart Debug] Ignoring handle:", handle);
+        return;
+      }
+      
       const isTorontoItem = handle.includes("toronto");
       const violates = torontoPage ? !isTorontoItem : isTorontoItem;
       if (violates) offenders.push(lb);
