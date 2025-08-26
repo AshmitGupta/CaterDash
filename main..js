@@ -590,98 +590,103 @@ function updateSubLinksStyle() {
   var dateTimeText = document.getElementById('date-time-text');
   var dateTimePickerButton = document.getElementById('date-time-picker');
   var cuisineTxtEl = document.getElementById('cusine-timing-txt');
-
   if (!dateTimeText || !dateTimePickerButton || !cuisineTxtEl) return;
 
-  function parseAmPmTo24(str) {
-    // "11:00 AM" -> {h:11,m:0} ; "10:00 PM" -> {h:22,m:0}
-    var m = str.trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
-    if (!m) return { h: 0, m: 0 };
-    var h = parseInt(m[1], 10);
-    var min = parseInt(m[2], 10);
-    var ap = m[3].toUpperCase();
-    if (ap === "PM" && h !== 12) h += 12;
-    if (ap === "AM" && h === 12) h = 0;
-    return { h: h, m: min };
+  function parseAmPmTo24(str){
+    var m=str.trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+    if(!m) return {h:0,m:0};
+    var h=+m[1], min=+m[2], ap=m[3].toUpperCase();
+    if(ap==="PM" && h!==12) h+=12;
+    if(ap==="AM" && h===12) h=0;
+    return {h:h,m:min};
   }
+  function getCuisineHours(){
+    var text=cuisineTxtEl.textContent||"";
+    var mm=text.match(/(\d{1,2}:\d{2}\s*[AP]M)\s*[-–]\s*(\d{1,2}:\d{2}\s*[AP]M)/i);
+    if(!mm) return {start:{h:11,m:0}, end:{h:20,m:0}};
+    return {start:parseAmPmTo24(mm[1]), end:parseAmPmTo24(mm[2])};
+  }
+  function setHM(d,h,m){ var x=new Date(d); x.setHours(h,m,0,0); return x; }
+  function pad(n){ return (n<10?'0':'')+n; }
+  function sameYMD(a,b){ return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate(); }
 
-  function getCuisineHours() {
-    // Expect: "Mon – Sun, 11:00 AM – 10:00 PM"
-    // Extract "11:00 AM" and "10:00 PM"
-    var text = cuisineTxtEl.textContent || "";
-    var mm = text.match(/(\d{1,2}:\d{2}\s*[AP]M)\s*[-–]\s*(\d{1,2}:\d{2}\s*[AP]M)/i);
-    if (!mm) {
-      // Fallback to 11–8 if format ever breaks
-      return { start: { h: 11, m: 0 }, end: { h: 20, m: 0 } };
+  // 48h threshold
+  var threshold = new Date();
+  threshold.setHours(threshold.getHours()+48);
+
+  // cuisine hours
+  var hours = getCuisineHours();
+  var openStr = pad(hours.start.h)+":"+pad(hours.start.m);
+  var closeStr = pad(hours.end.h)+":"+pad(hours.end.m);
+
+  // default suggestion: snap the 48h mark into a valid open slot
+  function nextValidSlot(base){
+    var start = setHM(base, hours.start.h, hours.start.m);
+    var end   = setHM(base, hours.end.h,   hours.end.m);
+    if (base < start) return start;
+    if (base > end) {
+      var nxt = new Date(base); nxt.setDate(nxt.getDate()+1);
+      return setHM(nxt, hours.start.h, hours.start.m);
     }
-    return { start: parseAmPmTo24(mm[1]), end: parseAmPmTo24(mm[2]) };
-  }
-
-  function setTimeHM(d, h, m) {
-    var copy = new Date(d.getTime());
-    copy.setHours(h, m, 0, 0);
-    return copy;
-  }
-
-  function nextValidSlot(base) {
-    // Ensure at least 48h and within cuisine window
-    var hours = getCuisineHours();
-    var startToday = setTimeHM(base, hours.start.h, hours.start.m);
-    var endToday = setTimeHM(base, hours.end.h, hours.end.m);
-
-    if (base < startToday) return startToday;
-    if (base > endToday) {
-      // move to next day start
-      var next = new Date(base.getTime());
-      next.setDate(next.getDate() + 1);
-      return setTimeHM(next, hours.start.h, hours.start.m);
-    }
-    // inside window already
     return base;
   }
+  var defaultDate = nextValidSlot(threshold);
 
-  // Compute 48h baseline
-  var fortyEightHoursFromNow = new Date();
-  fortyEightHoursFromNow.setHours(fortyEightHoursFromNow.getHours() + 48);
+  // minDate must be DATE-ONLY
+  var minDateOnly = new Date(threshold.getFullYear(), threshold.getMonth(), threshold.getDate());
 
-  // Snap to cuisine window
-  var hours = getCuisineHours();
-  var defaultDate = nextValidSlot(fortyEightHoursFromNow);
+  // compute dynamic minTime for a given selected day
+  function minTimeForDay(day){
+    if (!day) return openStr;
+    if (!sameYMD(day, threshold)) return openStr;
+    // same day as threshold: min time is max(opening, threshold time)
+    var thStr = pad(threshold.getHours())+":"+pad(threshold.getMinutes());
+    return thStr > openStr ? thStr : openStr;
+  }
 
-  // Flatpickr accepts "H:i" for min/max
-  function pad(n){return (n<10?'0':'')+n;}
-  var minTimeStr = pad(hours.start.h) + ":" + pad(hours.start.m);
-  var maxTimeStr = pad(hours.end.h) + ":" + pad(hours.end.m);
-
-  var fpInstance = flatpickr(dateTimeText, {
+  var fp = flatpickr(dateTimeText, {
     disableMobile: true,
     enableTime: true,
     dateFormat: "d M Y | h:i K",
     defaultDate: defaultDate,
-    minDate: defaultDate,          // cannot pick earlier than 48h-adjusted slot
+    minDate: minDateOnly,        // blocks dates before Aug 28
     minuteIncrement: 1,
-    minTime: minTimeStr,           // from cuisine hours
-    maxTime: maxTimeStr,           // from cuisine hours
-    onClose: function (selectedDates, dateStr) {
-      dateTimeText.textContent = dateStr;
+    maxTime: closeStr,           // fixed by cuisine closing
+    onReady: function(selectedDates, dateStr, instance){
+      instance.set("minTime", minTimeForDay(selectedDates[0] || defaultDate));
+      dateTimeText.textContent = instance.formatDate(defaultDate, "d M Y | h:i K");
     },
-    onChange: function (selectedDates, dateStr, instance) {
-      // If user picks a time outside window (possible when switching dates), snap to min/max
-      if (!selectedDates.length) return;
-      var d = selectedDates[0];
-      var start = setTimeHM(d, hours.start.h, hours.start.m);
-      var end = setTimeHM(d, hours.end.h, hours.end.m);
+    onOpen: function(selectedDates, dateStr, instance){
+      instance.set("minTime", minTimeForDay(selectedDates[0] || instance.selectedDates[0]));
+    },
+    onMonthChange: function(_, __, instance){
+      // when user flips months and comes back, keep bounds correct
+      var day = instance.selectedDates[0] || defaultDate;
+      instance.set("minTime", minTimeForDay(day));
+    },
+    onChange: function(selectedDates, dateStr, instance){
+      var d = selectedDates[0]; if (!d) return;
+      // update day-specific minTime
+      instance.set("minTime", minTimeForDay(d));
+
+      // snap inside open/close
+      var start=setHM(d, hours.start.h, hours.start.m);
+      var end=setHM(d, hours.end.h, hours.end.m);
+
+      // also enforce 48h on same day
+      if (sameYMD(d, threshold) && d < threshold) d = new Date(threshold);
+
       if (d < start) instance.setDate(start, true);
       else if (d > end) instance.setDate(end, true);
+
+      dateTimeText.textContent = dateStr;
+    },
+    onClose: function(selectedDates, dateStr){
+      dateTimeText.textContent = dateStr;
     }
   });
 
-  // Show the preformatted default in the text element
-  dateTimeText.textContent = fpInstance.formatDate(defaultDate, "d M Y | h:i K");
-
-  dateTimePickerButton.addEventListener('click', function () {
-    fpInstance.open();
-  });
+  dateTimePickerButton.addEventListener('click', function(){ fp.open(); });
 
   function handleCheckout() {
     saveNotes();
