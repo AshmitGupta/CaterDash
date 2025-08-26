@@ -589,36 +589,99 @@ function updateSubLinksStyle() {
 
   var dateTimeText = document.getElementById('date-time-text');
   var dateTimePickerButton = document.getElementById('date-time-picker');
+  var cuisineTxtEl = document.getElementById('cusine-timing-txt');
 
-  if (dateTimeText && dateTimePickerButton) {
-    var fortyEightHoursFromNow = new Date();
-    fortyEightHoursFromNow.setHours(fortyEightHoursFromNow.getHours() + 48);
+  if (!dateTimeText || !dateTimePickerButton || !cuisineTxtEl) return;
 
-    if (fortyEightHoursFromNow.getHours() < 11) {
-      fortyEightHoursFromNow.setHours(11);
-    } else if (fortyEightHoursFromNow.getHours() > 20 || (fortyEightHoursFromNow.getHours() === 20 && fortyEightHoursFromNow.getMinutes() > 0)) {
-      fortyEightHoursFromNow.setDate(fortyEightHoursFromNow.getDate() + 1);
-      fortyEightHoursFromNow.setHours(11, 0);
-    }
-
-    var fpInstance = flatpickr(dateTimeText, {
-      disableMobile: true,
-      enableTime: true,
-      dateFormat: "d M Y | h:i K",
-      defaultDate: fortyEightHoursFromNow,
-      minDate: fortyEightHoursFromNow,
-      minuteIncrement: 1,
-      minTime: "11:00",
-      maxTime: "20:00",
-      onClose: function (selectedDates, dateStr, instance) {
-        dateTimeText.textContent = dateStr;
-      }
-    });
-    dateTimeText.textContent = fpInstance.formatDate(fortyEightHoursFromNow, "d M Y | h:i K");
-    dateTimePickerButton.addEventListener('click', function () {
-      fpInstance.open();
-    });
+  function parseAmPmTo24(str) {
+    // "11:00 AM" -> {h:11,m:0} ; "10:00 PM" -> {h:22,m:0}
+    var m = str.trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+    if (!m) return { h: 0, m: 0 };
+    var h = parseInt(m[1], 10);
+    var min = parseInt(m[2], 10);
+    var ap = m[3].toUpperCase();
+    if (ap === "PM" && h !== 12) h += 12;
+    if (ap === "AM" && h === 12) h = 0;
+    return { h: h, m: min };
   }
+
+  function getCuisineHours() {
+    // Expect: "Mon – Sun, 11:00 AM – 10:00 PM"
+    // Extract "11:00 AM" and "10:00 PM"
+    var text = cuisineTxtEl.textContent || "";
+    var mm = text.match(/(\d{1,2}:\d{2}\s*[AP]M)\s*[-–]\s*(\d{1,2}:\d{2}\s*[AP]M)/i);
+    if (!mm) {
+      // Fallback to 11–8 if format ever breaks
+      return { start: { h: 11, m: 0 }, end: { h: 20, m: 0 } };
+    }
+    return { start: parseAmPmTo24(mm[1]), end: parseAmPmTo24(mm[2]) };
+  }
+
+  function setTimeHM(d, h, m) {
+    var copy = new Date(d.getTime());
+    copy.setHours(h, m, 0, 0);
+    return copy;
+  }
+
+  function nextValidSlot(base) {
+    // Ensure at least 48h and within cuisine window
+    var hours = getCuisineHours();
+    var startToday = setTimeHM(base, hours.start.h, hours.start.m);
+    var endToday = setTimeHM(base, hours.end.h, hours.end.m);
+
+    if (base < startToday) return startToday;
+    if (base > endToday) {
+      // move to next day start
+      var next = new Date(base.getTime());
+      next.setDate(next.getDate() + 1);
+      return setTimeHM(next, hours.start.h, hours.start.m);
+    }
+    // inside window already
+    return base;
+  }
+
+  // Compute 48h baseline
+  var fortyEightHoursFromNow = new Date();
+  fortyEightHoursFromNow.setHours(fortyEightHoursFromNow.getHours() + 48);
+
+  // Snap to cuisine window
+  var hours = getCuisineHours();
+  var defaultDate = nextValidSlot(fortyEightHoursFromNow);
+
+  // Flatpickr accepts "H:i" for min/max
+  function pad(n){return (n<10?'0':'')+n;}
+  var minTimeStr = pad(hours.start.h) + ":" + pad(hours.start.m);
+  var maxTimeStr = pad(hours.end.h) + ":" + pad(hours.end.m);
+
+  var fpInstance = flatpickr(dateTimeText, {
+    disableMobile: true,
+    enableTime: true,
+    dateFormat: "d M Y | h:i K",
+    defaultDate: defaultDate,
+    minDate: defaultDate,          // cannot pick earlier than 48h-adjusted slot
+    minuteIncrement: 1,
+    minTime: minTimeStr,           // from cuisine hours
+    maxTime: maxTimeStr,           // from cuisine hours
+    onClose: function (selectedDates, dateStr) {
+      dateTimeText.textContent = dateStr;
+    },
+    onChange: function (selectedDates, dateStr, instance) {
+      // If user picks a time outside window (possible when switching dates), snap to min/max
+      if (!selectedDates.length) return;
+      var d = selectedDates[0];
+      var start = setTimeHM(d, hours.start.h, hours.start.m);
+      var end = setTimeHM(d, hours.end.h, hours.end.m);
+      if (d < start) instance.setDate(start, true);
+      else if (d > end) instance.setDate(end, true);
+    }
+  });
+
+  // Show the preformatted default in the text element
+  dateTimeText.textContent = fpInstance.formatDate(defaultDate, "d M Y | h:i K");
+
+  dateTimePickerButton.addEventListener('click', function () {
+    fpInstance.open();
+  });
 
   function handleCheckout() {
     saveNotes();
