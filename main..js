@@ -686,6 +686,15 @@ function updateSubLinksStyle() {
     }
   });
 
+  function maybeClose(e) {
+    if (e && e.target && e.target.closest && e.target.closest('.flatpickr-calendar')) return;
+    if (fp && fp.isOpen) fp.close();
+  }
+
+  window.addEventListener('scroll', maybeClose, { passive: true });
+  window.addEventListener('wheel',  maybeClose, { passive: true });
+  window.addEventListener('touchmove', maybeClose, { passive: true });
+
   dateTimePickerButton.addEventListener('click', function(){ fp.open(); });
 
   function handleCheckout() {
